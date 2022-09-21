@@ -3,8 +3,10 @@
 # `<name of application here>`
 
 ## Database Schema Design
-
-`<insert database schema design here>`
+<p>The image below was created by me & uploaded to a free service by me to make adding it into the readme easier. Here is the link to the schema created by my profile https://dbdiagram.io/d/631b5c6a0911f91ba5742e08</p>
+<p align="center">
+  <img src="https://ibb.co/QdVKbt4" alt="Sublime's custom image"/>
+</p>
 
 ## API Documentation
 
