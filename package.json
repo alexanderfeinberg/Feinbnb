@@ -8,7 +8,7 @@
     "dev:backend": "npm install --prefix backend start",
     "sequelize": "npm run --prefix backend sequelize",
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
-    "start": "npm start --prefix baxkend"
+    "start": "npm start --prefix backend"
   },
   "repository": {
     "type": "git",
