@@ -11,6 +11,11 @@ module.exports = {
       ownerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        references: {
+          model: "Users",
+          id: "id",
+        },
+        onDelete: "CASCADE",
       },
       address: {
         type: Sequelize.STRING,
