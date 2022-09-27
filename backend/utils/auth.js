@@ -12,11 +12,13 @@ const setTokenCookie = (res, user) => {
     { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
   );
 
+  console.log(token);
+
   const isProduction = process.env.NODE_ENV === "production";
 
   // Set the token cookie
   res.cookie("token", token, {
-    maxAge: expiresIn * 1000, // maxAge in milliseconds
+    maxAge: expiresIn * 10000, // maxAge in milliseconds
     httpOnly: true,
     secure: isProduction,
     sameSite: isProduction && "Lax",
