@@ -30,7 +30,7 @@ router.post("/", validateLogin, async (req, res, next) => {
     return next(err);
   }
 
-  setTokenCookie(res, user);
+  user.dataValues.token = setTokenCookie(res, user);
   console.log(res);
   return res.json({
     user,
@@ -46,7 +46,7 @@ router.get("/", restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
     return res.json({
-      user: user.toSafeObject(),
+      user: user.toSafeObject(req),
     });
   } else return res.json({});
 });
