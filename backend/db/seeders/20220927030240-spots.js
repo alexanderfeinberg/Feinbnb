@@ -50,7 +50,7 @@ const spots = [
     price: 150.0,
   },
   {
-    ownerId: 4,
+    ownerId: 2,
     address: "5 Chares Lane",
     city: "Miami",
     state: "Florida",
@@ -62,7 +62,7 @@ const spots = [
     price: 250.0,
   },
   {
-    ownerId: 4,
+    ownerId: 3,
     address: "6 Chares Lane",
     city: "San Francisco",
     state: "California",
@@ -74,7 +74,7 @@ const spots = [
     price: 250.0,
   },
   {
-    ownerId: 5,
+    ownerId: 2,
     address: "7 Chares Lane",
     city: "San Diego",
     state: "California",
@@ -86,7 +86,7 @@ const spots = [
     price: 220.0,
   },
   {
-    ownerId: 5,
+    ownerId: 3,
     address: "8 Chares Lane",
     city: "Washington",
     state: "District of Columbia",
