@@ -60,6 +60,10 @@ app.use((err, _req, _res, next) => {
   //   console.error("ERROR: ", typeof err.name);
   if (err.name === "SequelizeUniqueConstraintError") {
     err.status = 403;
+    const errorCol = err.errors[0].split(" ")[0];
+    err.message = `${errorCol} already exists`;
+    delete err.title;
+    err.errors[0] = `User with that ${errorCol} already exists.`;
   }
 
   next(err);
@@ -68,12 +72,17 @@ app.use((err, _req, _res, next) => {
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
 
-  res.json({
-    title: err.title || "Server Error",
+  const responseObj = {
     message: err.message,
+    statusCode: err.status,
     errors: err.errors,
     stack: isProduction ? null : err.stack,
-  });
+  };
+  if (err.title) {
+    responseObj["title"] = err.title;
+  }
+
+  res.json(responseObj);
 });
 
 module.exports = app;
