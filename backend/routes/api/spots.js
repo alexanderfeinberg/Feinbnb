@@ -8,7 +8,10 @@ const {
   sequelize,
 } = require("../../db/models");
 const spot = require("../../db/models/spot");
-const { validateSpotCreate } = require("../../utils/validate-body");
+const {
+  validateSpotCreate,
+  validateReview,
+} = require("../../utils/validate-body");
 const {
   newErr,
   validateOwnership,
@@ -50,6 +53,34 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   validateExists("Spot", spot, next);
 
   res.json(spot);
+});
+
+router.post("/:spotId/reviews", validateReview, async (req, res, next) => {
+  const { review, stars } = req.body;
+  const spot = await Spot.findByPk(req.params.spotId);
+  validateExists("Spot", spot, next);
+
+  const userReview = await Review.findOne({
+    where: {
+      userId: req.user.id,
+      spotId: parseInt(req.params.spotId),
+    },
+  });
+
+  if (userReview) {
+    const err = Error("User already has a review for this spot");
+    err.status = 403;
+    return next(err);
+  }
+
+  const newReview = await Review.create({
+    userId: req.user.id,
+    spotId: req.params.spotId,
+    review,
+    stars,
+  });
+
+  res.json(newReview);
 });
 
 router.get("/current", async (req, res, next) => {
@@ -136,13 +167,13 @@ router.get("/", async (req, res, next) => {
         spotId: spot.id,
       },
     });
-    console.log(spot.id, count);
+
     let total = await Review.count({
       where: {
         spotId: spot.id,
       },
     });
-    console.log(spot.id, total);
+
     spot.dataValues.avgRating = count / total;
     await setPreviewImage(spot);
   }
