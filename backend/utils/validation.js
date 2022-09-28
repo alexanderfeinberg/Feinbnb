@@ -1,5 +1,20 @@
 const { validationResult } = require("express-validator");
 
+const validateExists = (modelName, model, next) => {
+  console.log("MODEL, ", model);
+  if (!model) {
+    console.log(`${modelName} does not exist`);
+    return newErr(`${modelName} does not exist`, 400, next);
+  }
+};
+
+const validateOwnership = (modelName, model, modelKey, user, userKey, next) => {
+  if (model[modelKey] !== user[userKey]) {
+    console.log(`${modelName} must be owned by current user`);
+    return newErr(`${modelName} must be owned by current user`, 401, next);
+  }
+};
+
 const newErr = (message, status, next) => {
   const err = Error(message);
   err.status = status;
@@ -35,4 +50,6 @@ module.exports = {
   handleValidationErrors,
   overwriteErrorMsg,
   newErr,
+  validateExists,
+  validateOwnership,
 };

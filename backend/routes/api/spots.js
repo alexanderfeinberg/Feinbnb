@@ -3,7 +3,11 @@ const router = express.Router();
 const { Spot, Review, SpotImage, sequelize } = require("../../db/models");
 const spot = require("../../db/models/spot");
 const { validateSpotCreate } = require("../../utils/validate-body");
-const { newErr } = require("../../utils/validation");
+const {
+  newErr,
+  validateOwnership,
+  validateExists,
+} = require("../../utils/validation");
 
 router.get("/current", async (req, res, next) => {
   console.log(req.user.id);
@@ -20,12 +24,13 @@ router.get("/:spotId", async (req, res, next) => {
   console.log(req.params.spotId);
   const spot = await Spot.findByPk(req.params.spotId);
 
-  if (!spot) {
-    // const err = Error("Spot couldn't be found");
-    // err.status = 404;
-    // return next(err);
-    return newErr("Spot couldn't be found", 404, next);
-  }
+  //   if (!spot) {
+  //     // const err = Error("Spot couldn't be found");
+  //     // err.status = 404;
+  //     // return next(err);
+  //     return newErr("Spot couldn't be found", 404, next);
+  //   }
+  validateExists("Spot", spot, next);
 
   return res.json(spot);
 });
@@ -34,17 +39,19 @@ router.post("/:spotId/images", async (req, res, next) => {
   const { url, preview } = req.body;
   const spot = await Spot.findByPk(req.params.spotId);
 
-  if (!spot) {
-    // const err = Error("Spot couldn't be found");
-    // err.status = 404;
-    // return next(err);
-    return newErr("Spot couldn't be found", 404, next);
-  } else if (spot.ownerId !== req.user.id) {
-    // const err = Error("Spot must be owned by current user");
-    // err.status = 401;
-    // return next(err);
-    return newErr("Spot must be owned by current user", 401, next);
-  }
+  //   if (!spot) {
+  //     // const err = Error("Spot couldn't be found");
+  //     // err.status = 404;
+  //     // return next(err);
+  //     return newErr("Spot couldn't be found", 404, next);
+  //   } else if (spot.ownerId !== req.user.id) {
+  //     // const err = Error("Spot must be owned by current user");
+  //     // err.status = 401;
+  //     // return next(err);
+  //     return newErr("Spot must be owned by current user", 401, next);
+  //   }
+  validateExists("Spot", spot, next);
+  validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
   const newImage = await spot.createSpotImage({ url: url, preview: preview });
   res.status(201);
@@ -110,17 +117,19 @@ router.get("/", async (req, res, next) => {
 
 router.put("/:spotId", validateSpotCreate, async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
-  if (!spot) {
-    // const err = Error("Spot does not exist");
-    // err.status = 400;
-    // return next(err);
-    return newErr("Spot does not exist", 400, next);
-  } else if (spot.ownerId !== req.user.id) {
-    // const err = Error("Spot must be owned by current user");
-    // err.status = 401;
-    // return next(err);
-    return newErr("Spot must be owned by current user", 401, next);
-  }
+  //   if (!spot) {
+  //     // const err = Error("Spot does not exist");
+  //     // err.status = 400;
+  //     // return next(err);
+  //     return newErr("Spot does not exist", 400, next);
+  //   } else if (spot.ownerId !== req.user.id) {
+  //     // const err = Error("Spot must be owned by current user");
+  //     // err.status = 401;
+  //     // return next(err);
+  //     return newErr("Spot must be owned by current user", 401, next);
+  //   }
+  validateExists("Spot", spot, next);
+  validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
   for (let key of Object.keys(req.body)) {
     spot[key] = req.body[key];
@@ -132,11 +141,14 @@ router.put("/:spotId", validateSpotCreate, async (req, res, next) => {
 
 router.delete("/:spotId", async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
-  if (!spot) {
-    return newErr("Spot does not exist", 400, next);
-  } else if (spot.ownerId !== req.user.id) {
-    return newErr("Spot must be owned by current user", 401, next);
-  }
+  //   if (!spot) {
+  //     return newErr("Spot does not exist", 400, next);
+  //   } else if (spot.ownerId !== req.user.id) {
+  //     return newErr("Spot must be owned by current user", 401, next);
+  //   }
+
+  validateExists("Spot", spot, next);
+  validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
   await spot.destroy();
 
