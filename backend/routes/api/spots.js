@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { Spot, Review, SpotImage, sequelize } = require("../../db/models");
+const {
+  Spot,
+  Review,
+  SpotImage,
+  ReviewImage,
+  sequelize,
+} = require("../../db/models");
 const spot = require("../../db/models/spot");
 const { validateSpotCreate } = require("../../utils/validate-body");
 const {
@@ -8,6 +14,43 @@ const {
   validateOwnership,
   validateExists,
 } = require("../../utils/validation");
+
+const setPreviewImage = async (obj) => {
+  obj.dataValues.previewImage = await SpotImage.findOne({
+    where: {
+      spotId: obj.dataValues.id,
+      preview: true,
+    },
+    attributes: ["url"],
+  });
+
+  return obj.dataValues.previewImage;
+};
+
+router.get("/:spotId/reviews", async (req, res, next) => {
+  const spot = await Spot.findByPk(req.params.spotId, {
+    attributes: [],
+    include: {
+      model: Review,
+      include: {
+        model: ReviewImage,
+        attributes: ["id", "url"],
+      },
+    },
+  });
+  //   const reviews = await Review.findAll({
+  //     where: {
+  //       spotId: req.params.spotId,
+  //     },
+  //     include: {
+  //       model: ReviewImage,
+  //     },
+  //   });
+
+  validateExists("Spot", spot, next);
+
+  res.json(spot);
+});
 
 router.get("/current", async (req, res, next) => {
   console.log(req.user.id);
@@ -93,22 +136,16 @@ router.get("/", async (req, res, next) => {
         spotId: spot.id,
       },
     });
+    console.log(spot.id, count);
     let total = await Review.count({
       where: {
         spotId: spot.id,
       },
     });
+    console.log(spot.id, total);
     spot.dataValues.avgRating = count / total;
-    spot.dataValues.previewImage = await SpotImage.findOne({
-      where: {
-        spotId: spot.id,
-        preview: true,
-      },
-      attributes: ["url"],
-    });
+    await setPreviewImage(spot);
   }
-
-  console.log(spots);
 
   res.json({
     spots,
@@ -158,4 +195,4 @@ router.delete("/:spotId", async (req, res, next) => {
   });
 });
 
-module.exports = router;
+module.exports = { router, setPreviewImage };
