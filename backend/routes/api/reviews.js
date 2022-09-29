@@ -8,7 +8,10 @@ const {
   ReviewImage,
   sequelize,
 } = require("../../db/models");
-const { validateSpotCreate } = require("../../utils/validate-body");
+const {
+  validateSpotCreate,
+  validateReview,
+} = require("../../utils/validate-body");
 const {
   newErr,
   validateOwnership,
@@ -36,7 +39,6 @@ router.get("/current", async (req, res, next) => {
     ],
   });
 
-  console.log("SPOT ", reviews);
   validateExists("Reviews", reviews);
   for (let i = 0; i < reviews.length; i++) {
     let review = reviews[i];
@@ -45,6 +47,57 @@ router.get("/current", async (req, res, next) => {
   }
 
   return res.json({ reviews });
+});
+
+router.post("/:reviewId/images", async (req, res, next) => {
+  if (!req.body.url) {
+    const err = Error("URL is required");
+    err.status = 400;
+    next(err);
+  }
+  const review = await Review.findByPk(req.params.reviewId, {
+    include: {
+      model: ReviewImage,
+    },
+  });
+
+  validateExists("Review", review, next);
+  validateOwnership("Review", review, "userId", req.user, "id", next);
+  if (review.dataValues.ReviewImages.length >= 10) {
+    const err = Error("Maximum number of images for this resource was reached");
+    err.status = 403;
+    return next(err);
+  }
+
+  const newImg = await review.createReviewImage({
+    url: req.body.url,
+  });
+  res.json(newImg);
+});
+
+router.put("/:reviewId", validateReview, async (req, res, next) => {
+  const review = await Review.findByPk(req.params.reviewId);
+
+  validateExists("Review", review, next);
+  validateOwnership("Review", review, "userId", req.user, "id", next);
+
+  for (let key of Object.keys(req.body)) {
+    review[key] = req.body[key];
+  }
+
+  const saved = await review.save();
+  res.json(saved);
+});
+
+router.delete("/:reviewId", async (req, res, next) => {
+  const review = await Review.findByPk(req.params.reviewId);
+  validateExists("Review", review, next);
+  validateOwnership("Review", review, "userId", req.user, "id", next);
+  await review.destroy();
+  res.json({
+    message: "Successfully deleted",
+    statusCode: 200,
+  });
 });
 
 module.exports = router;

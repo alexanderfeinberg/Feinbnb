@@ -1,22 +1,22 @@
 const express = require("express");
 const router = express.Router();
 const {
+  User,
   Spot,
   Review,
   SpotImage,
   ReviewImage,
+  Booking,
   sequelize,
 } = require("../../db/models");
 const spot = require("../../db/models/spot");
 const {
   validateSpotCreate,
   validateReview,
+  validateBookings,
+  validateDates,
 } = require("../../utils/validate-body");
-const {
-  newErr,
-  validateOwnership,
-  validateExists,
-} = require("../../utils/validation");
+const { validateOwnership, validateExists } = require("../../utils/validation");
 
 const setPreviewImage = async (obj) => {
   obj.dataValues.previewImage = await SpotImage.findOne({
@@ -26,8 +26,8 @@ const setPreviewImage = async (obj) => {
     },
     attributes: ["url"],
   });
-
-  return obj.dataValues.previewImage;
+  console.log(obj.dataValues.previewImage.url);
+  return obj.dataValues.previewImage.url;
 };
 
 router.get("/:spotId/reviews", async (req, res, next) => {
@@ -41,14 +41,6 @@ router.get("/:spotId/reviews", async (req, res, next) => {
       },
     },
   });
-  //   const reviews = await Review.findAll({
-  //     where: {
-  //       spotId: req.params.spotId,
-  //     },
-  //     include: {
-  //       model: ReviewImage,
-  //     },
-  //   });
 
   validateExists("Spot", spot, next);
 
@@ -113,17 +105,6 @@ router.post("/:spotId/images", async (req, res, next) => {
   const { url, preview } = req.body;
   const spot = await Spot.findByPk(req.params.spotId);
 
-  //   if (!spot) {
-  //     // const err = Error("Spot couldn't be found");
-  //     // err.status = 404;
-  //     // return next(err);
-  //     return newErr("Spot couldn't be found", 404, next);
-  //   } else if (spot.ownerId !== req.user.id) {
-  //     // const err = Error("Spot must be owned by current user");
-  //     // err.status = 401;
-  //     // return next(err);
-  //     return newErr("Spot must be owned by current user", 401, next);
-  //   }
   validateExists("Spot", spot, next);
   validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
@@ -131,6 +112,60 @@ router.post("/:spotId/images", async (req, res, next) => {
   res.status(201);
   return res.json(newImage);
 });
+
+router.get("/:spotId/bookings", async (req, res, next) => {
+  let spot = await Spot.findByPk(req.params.spotId);
+  validateExists("Spot", spot, next, 404);
+
+  if (spot.ownerId === req.user.id) {
+    var bookings = await Booking.findAll({
+      where: {
+        spotId: spot.id,
+      },
+      include: {
+        model: User,
+        attributes: ["id", "firstName", "lastName"],
+      },
+    });
+  } else if (spot.ownerId !== req.user.id) {
+    var bookings = await Booking.findAll({
+      attributes: ["spotId", "startDate", "endDate"],
+      where: {
+        spotId: spot.id,
+      },
+    });
+  }
+
+  return res.json({ Bookings: bookings });
+});
+
+router.post(
+  "/:spotId/bookings",
+  validateBookings,
+  validateDates,
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    let { startDate, endDate } = req.body;
+    validateExists("Spot", spot, next, 404);
+
+    if (spot.ownerId === req.user.id) {
+      const err = Error("Owner can not create a booking.");
+      err.status = 400;
+      next(err);
+    }
+
+    startDate = new Date(startDate);
+    endDate = new Date(endDate);
+    const newBooking = await spot.createBooking({
+      spotId: spot.id,
+      userId: req.user.id,
+      startDate: startDate,
+      endDate: endDate,
+    });
+
+    res.json(newBooking);
+  }
+);
 
 router.post("/", validateSpotCreate, async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } =
@@ -185,17 +220,6 @@ router.get("/", async (req, res, next) => {
 
 router.put("/:spotId", validateSpotCreate, async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
-  //   if (!spot) {
-  //     // const err = Error("Spot does not exist");
-  //     // err.status = 400;
-  //     // return next(err);
-  //     return newErr("Spot does not exist", 400, next);
-  //   } else if (spot.ownerId !== req.user.id) {
-  //     // const err = Error("Spot must be owned by current user");
-  //     // err.status = 401;
-  //     // return next(err);
-  //     return newErr("Spot must be owned by current user", 401, next);
-  //   }
   validateExists("Spot", spot, next);
   validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
@@ -209,12 +233,6 @@ router.put("/:spotId", validateSpotCreate, async (req, res, next) => {
 
 router.delete("/:spotId", async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
-  //   if (!spot) {
-  //     return newErr("Spot does not exist", 400, next);
-  //   } else if (spot.ownerId !== req.user.id) {
-  //     return newErr("Spot must be owned by current user", 401, next);
-  //   }
-
   validateExists("Spot", spot, next);
   validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
