@@ -81,20 +81,33 @@ const validateBookings = [
 
 const validateDates = [
   check("startDate").custom(async (start, { req }) => {
+    let spotId;
+    if (!req.params.spotId) {
+      let booking = await Booking.findByPk(req.params.bookingId);
+
+      spotId = booking.spotId;
+    }
     const bookings = await Booking.findAll({
       where: {
-        spotId: req.params.spotId,
+        spotId: req.params.spotId || spotId,
       },
     });
 
     if (!bookings) return true;
     let startDate = new Date(req.body.startDate);
+    let endDate = new Date(req.body.endDate);
     for (let i = 0; i < bookings.length; i++) {
       let booking = bookings[i];
-      console.log(booking.startDate);
+      console.log(startDate);
       let bookingStart = new Date(booking.startDate);
       let bookingEnd = new Date(booking.endDate);
+      console.log(bookingEnd);
+      console.log(startDate < bookingEnd, startDate > bookingStart);
       if (startDate < bookingEnd && startDate > bookingStart) {
+        const err = Error("Start date conflicts with an existing booking");
+        err.status = 403;
+        throw err;
+      } else if (startDate < bookingStart && endDate > bookingEnd) {
         const err = Error("Start date conflicts with an existing booking");
         err.status = 403;
         throw err;
@@ -104,20 +117,32 @@ const validateDates = [
     return true;
   }),
   check("endDate").custom(async (end, { req }) => {
+    let spotId;
+    if (!req.params.spotId) {
+      let booking = await Booking.findByPk(req.params.bookingId);
+
+      spotId = booking.spotId;
+    }
+
     const bookings = await Booking.findAll({
       where: {
-        spotId: req.params.spotId,
+        spotId: req.params.spotId || spotId,
       },
     });
 
     if (!bookings) return true;
+    let startDate = new Date(req.body.startDate);
     let endDate = new Date(req.body.endDate);
     for (let i = 0; i < bookings.length; i++) {
       let booking = bookings[i];
       let bookingStart = new Date(booking.startDate);
       let bookingEnd = new Date(booking.endDate);
       if (bookingStart < endDate && bookingEnd > endDate) {
-        const err = Error("Start date conflicts with an existing booking");
+        const err = Error("End date conflicts with an existing booking");
+        err.status = 403;
+        throw err;
+      } else if (startDate < bookingStart && endDate > bookingEnd) {
+        const err = Error("End date conflicts with an existing booking");
         err.status = 403;
         throw err;
       }
@@ -128,9 +153,70 @@ const validateDates = [
   handleDateErrors,
 ];
 
+const validateQuery = [
+  check("page").custom((val) => {
+    if (!val) return true;
+    val = parseInt(val);
+    if ((!val && val !== 0) || val < 0) {
+      throw new Error("Page must be greater than or equal to 0");
+    }
+    return true;
+  }),
+  check("size").custom((val) => {
+    if (!val) return true;
+    val = parseInt(val);
+    if ((!val && val !== 0) || val < 0) {
+      throw new Error("Size must be greater than or equal to 0");
+    }
+    return true;
+  }),
+  check("maxLat").custom((val) => {
+    if (!val) return true;
+    val = parseFloat(val);
+    if (!val) throw new Error("Maximum latitude is invalid");
+    return true;
+  }),
+  check("minLat").custom((val) => {
+    if (!val) return true;
+    val = parseFloat(val);
+    if (!val) throw new Error("Minimum latitude is invalid");
+    return true;
+  }),
+  check("minLng").custom((val) => {
+    if (!val) return true;
+    val = parseFloat(val);
+    if (!val) throw new Error("Minimum longitude is invalid");
+    return true;
+  }),
+  check("maxLng").custom((val) => {
+    if (!val) return true;
+    val = parseFloat(val);
+    if (!val) throw new Error("Maximum longitude is invalid");
+    return true;
+  }),
+  check("minPrice").custom((val) => {
+    if (!val) return true;
+    val = parseFloat(val);
+    if (val === 0) return true;
+    if (!val || val < 0)
+      throw new Error("Minimum price must be greater than or equal to 0");
+    return true;
+  }),
+  check("maxPrice").custom((val) => {
+    if (!val) return true;
+    val = parseFloat(val);
+    if (val === 0) return true;
+    if (!val || val < 0)
+      throw new Error("Maximum price must be greater than or equal to 0");
+    return true;
+  }),
+  handleValidationErrors,
+];
+
 module.exports = {
   validateSpotCreate,
   validateReview,
   validateBookings,
   validateDates,
+  validateQuery,
 };

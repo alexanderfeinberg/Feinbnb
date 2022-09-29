@@ -1,4 +1,5 @@
 const express = require("express");
+const { Op } = require("sequelize");
 const router = express.Router();
 const {
   User,
@@ -15,9 +16,65 @@ const {
   validateReview,
   validateBookings,
   validateDates,
+  validateQuery,
 } = require("../../utils/validate-body");
 const { validateOwnership, validateExists } = require("../../utils/validation");
+const { requireAuth } = require("../../utils/auth.js");
 
+const handleQuery = (req) => {
+  const query = {};
+
+  let { page, size } = req.query;
+  if (!size || size >= 20 || size < 0) size = 20;
+  if (!page || page < 0) page = 0;
+  if (page > 10) page = 10;
+  if (page >= 1 && size >= 1) {
+    query.offset = size * (page - 1);
+  }
+  query.limit = size;
+
+  return query;
+};
+
+const handleWhere = (req) => {
+  const where = {};
+  if (req.query.minLat) {
+    where.lat = {
+      [Op.gte]: req.query.minLat,
+    };
+  }
+  if (req.query.maxLat) {
+    where.lat = {
+      [Op.lte]: req.query.maxLat,
+    };
+  }
+  if (req.query.minLng) {
+    where.minLng = {
+      [Op.gte]: req.query.minLng,
+    };
+  }
+  if (req.query.maxLng) {
+    where.lng = {
+      [Op.lte]: req.query.maxLng,
+    };
+  }
+  if (req.query.maxPrice) {
+    let val = req.query.maxPrice;
+    if (val < 0) val = 0;
+    where.price = {
+      [Op.lte]: val,
+    };
+  }
+  if (req.query.minPrice) {
+    let val = req.query.minPrice;
+    if (val < 0) val = 0;
+    where.price = {
+      [Op.gte]: val,
+    };
+  }
+
+  return where;
+};
 const setPreviewImage = async (obj) => {
   obj.dataValues.previewImage = await SpotImage.findOne({
     where: {
@@ -47,35 +104,40 @@ router.get("/:spotId/reviews", async (req, res, next) => {
   res.json(spot);
 });
 
-router.post("/:spotId/reviews", validateReview, async (req, res, next) => {
-  const { review, stars } = req.body;
-  const spot = await Spot.findByPk(req.params.spotId);
-  validateExists("Spot", spot, next);
+router.post(
+  "/:spotId/reviews",
+  requireAuth,
+  validateReview,
+  async (req, res, next) => {
+    const { review, stars } = req.body;
+    const spot = await Spot.findByPk(req.params.spotId);
+    validateExists("Spot", spot, next);
 
-  const userReview = await Review.findOne({
-    where: {
+    const userReview = await Review.findOne({
+      where: {
+        userId: req.user.id,
+        spotId: parseInt(req.params.spotId),
+      },
+    });
+
+    if (userReview) {
+      const err = Error("User already has a review for this spot");
+      err.status = 403;
+      return next(err);
+    }
+
+    const newReview = await Review.create({
       userId: req.user.id,
-      spotId: parseInt(req.params.spotId),
-    },
-  });
+      spotId: req.params.spotId,
+      review,
+      stars,
+    });
 
-  if (userReview) {
-    const err = Error("User already has a review for this spot");
-    err.status = 403;
-    return next(err);
+    res.json(newReview);
   }
+);
 
-  const newReview = await Review.create({
-    userId: req.user.id,
-    spotId: req.params.spotId,
-    review,
-    stars,
-  });
-
-  res.json(newReview);
-});
-
-router.get("/current", async (req, res, next) => {
+router.get("/current", requireAuth, async (req, res, next) => {
   console.log(req.user.id);
   const spots = await Spot.findAll({
     where: {
@@ -101,7 +163,7 @@ router.get("/:spotId", async (req, res, next) => {
   return res.json(spot);
 });
 
-router.post("/:spotId/images", async (req, res, next) => {
+router.post("/:spotId/images", requireAuth, async (req, res, next) => {
   const { url, preview } = req.body;
   const spot = await Spot.findByPk(req.params.spotId);
 
@@ -113,7 +175,7 @@ router.post("/:spotId/images", async (req, res, next) => {
   return res.json(newImage);
 });
 
-router.get("/:spotId/bookings", async (req, res, next) => {
+router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
   let spot = await Spot.findByPk(req.params.spotId);
   validateExists("Spot", spot, next, 404);
 
@@ -141,6 +203,7 @@ router.get("/:spotId/bookings", async (req, res, next) => {
 
 router.post(
   "/:spotId/bookings",
+  requireAuth,
   validateBookings,
   validateDates,
   async (req, res, next) => {
@@ -167,7 +230,7 @@ router.post(
   }
 );
 
-router.post("/", validateSpotCreate, async (req, res, next) => {
+router.post("/", requireAuth, validateSpotCreate, async (req, res, next) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
@@ -187,12 +250,14 @@ router.post("/", validateSpotCreate, async (req, res, next) => {
   res.json(newSpot);
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", validateQuery, async (req, res, next) => {
   const spots = await Spot.scope("getSpots").findAll({
     include: [
       //   { model: SpotImage, attributes: ["preview"] },
       { model: Review, attributes: [] },
     ],
+    where: handleWhere(req),
+    ...handleQuery(req),
   });
 
   for (let i = 0; i < spots.length; i++) {
@@ -218,20 +283,25 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-router.put("/:spotId", validateSpotCreate, async (req, res, next) => {
-  const spot = await Spot.findByPk(req.params.spotId);
-  validateExists("Spot", spot, next);
-  validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
+router.put(
+  "/:spotId",
+  requireAuth,
+  validateSpotCreate,
+  async (req, res, next) => {
+    const spot = await Spot.findByPk(req.params.spotId);
+    validateExists("Spot", spot, next);
+    validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
 
-  for (let key of Object.keys(req.body)) {
-    spot[key] = req.body[key];
+    for (let key of Object.keys(req.body)) {
+      spot[key] = req.body[key];
+    }
+
+    const updated = await spot.save();
+    return res.json(updated);
   }
+);
 
-  const updated = await spot.save();
-  return res.json(updated);
-});
-
-router.delete("/:spotId", async (req, res, next) => {
+router.delete("/:spotId", requireAuth, async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
   validateExists("Spot", spot, next);
   validateOwnership("Spot", spot, "ownerId", req.user, "id", next);

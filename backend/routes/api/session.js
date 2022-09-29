@@ -1,6 +1,10 @@
 const express = require("express");
 
-const { setTokenCookie, restoreUser } = require("../../utils/auth");
+const {
+  setTokenCookie,
+  restoreUser,
+  requireAuth,
+} = require("../../utils/auth");
 const { User } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -46,7 +50,7 @@ router.delete("/", (_req, res) => {
   return res.json({ message: "success" });
 });
 
-router.get("/", restoreUser, (req, res) => {
+router.get("/", requireAuth, restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
     return res.json({

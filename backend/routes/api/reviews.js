@@ -18,8 +18,9 @@ const {
   validateExists,
 } = require("../../utils/validation");
 const { setPreviewImage } = require("./spots.js");
+const { requireAuth } = require("../../utils/auth");
 
-router.get("/current", async (req, res, next) => {
+router.get("/current", requireAuth, async (req, res, next) => {
   const reviews = await Review.findAll({
     where: {
       userId: req.user.id,
@@ -49,7 +50,7 @@ router.get("/current", async (req, res, next) => {
   return res.json({ reviews });
 });
 
-router.post("/:reviewId/images", async (req, res, next) => {
+router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
   if (!req.body.url) {
     const err = Error("URL is required");
     err.status = 400;
@@ -75,21 +76,26 @@ router.post("/:reviewId/images", async (req, res, next) => {
   res.json(newImg);
 });
 
-router.put("/:reviewId", validateReview, async (req, res, next) => {
-  const review = await Review.findByPk(req.params.reviewId);
+router.put(
+  "/:reviewId",
+  requireAuth,
+  validateReview,
+  async (req, res, next) => {
+    const review = await Review.findByPk(req.params.reviewId);
 
-  validateExists("Review", review, next);
-  validateOwnership("Review", review, "userId", req.user, "id", next);
+    validateExists("Review", review, next);
+    validateOwnership("Review", review, "userId", req.user, "id", next);
 
-  for (let key of Object.keys(req.body)) {
-    review[key] = req.body[key];
+    for (let key of Object.keys(req.body)) {
+      review[key] = req.body[key];
+    }
+
+    const saved = await review.save();
+    res.json(saved);
   }
+);
 
-  const saved = await review.save();
-  res.json(saved);
-});
-
-router.delete("/:reviewId", async (req, res, next) => {
+router.delete("/:reviewId", requireAuth, async (req, res, next) => {
   const review = await Review.findByPk(req.params.reviewId);
   validateExists("Review", review, next);
   validateOwnership("Review", review, "userId", req.user, "id", next);
