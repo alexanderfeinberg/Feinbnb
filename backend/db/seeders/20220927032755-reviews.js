@@ -1,5 +1,7 @@
 "use strict";
 
+const { Op } = require("sequelize");
+
 const reviews = [
   {
     spotId: 1,
