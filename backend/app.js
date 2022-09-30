@@ -61,7 +61,11 @@ app.use((err, _req, _res, next) => {
   if (err.name === "SequelizeUniqueConstraintError") {
     err.status = 403;
     const errorCol = err.errors[0].split(" ")[0];
-    err.message = `${errorCol} already exists`;
+    if (errorCol === "email" || errorCol === "username") {
+      err.message = `User already exists`;
+    } else {
+      err.message = `${errorCol} already exists`;
+    }
     delete err.title;
     err.errors[0] = `User with that ${errorCol} already exists.`;
   }

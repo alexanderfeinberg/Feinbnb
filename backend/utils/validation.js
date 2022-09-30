@@ -5,15 +5,14 @@ const validateExists = (modelName, model, next, errOverride) => {
   console.log("MODEL, ", model);
   errOverride = errOverride || 400;
   if (!model) {
-    console.log(`${modelName} does not exist`);
-    return newErr(`${modelName} does not exist`, errOverride, next);
+    return newErr(`${modelName} couldn't be found.`, errOverride, next);
   }
 };
 
 const validateOwnership = (modelName, model, modelKey, user, userKey, next) => {
   if (model[modelKey] !== user[userKey]) {
-    console.log(`${modelName} must be owned by current user`);
-    return newErr(`${modelName} must be owned by current user`, 401, next);
+    console.log(`Forbidden`);
+    return newErr(`Forbidden`, 403, next);
   }
 };
 
@@ -72,9 +71,12 @@ const handleDateErrors = (req, _res, next) => {
   console.log(validationErrors);
   if (!validationErrors.isEmpty()) {
     const errors = validationErrors.array().map((error) => `${error.msg}`);
-    const err = Error(
+    let err = Error(
       "Sorry, this spot is already booked for the specified dates"
     );
+    if (errors[0].includes("Booking couldn't be found")) {
+      err = Error("Booking couldn't be found");
+    }
     err.errors = errors;
     err.status = 403;
     err.message = "Validation Error";

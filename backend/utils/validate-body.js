@@ -1,5 +1,9 @@
 const { check } = require("express-validator");
-const { handleValidationErrors, handleDateErrors } = require("./validation");
+const {
+  handleValidationErrors,
+  handleDateErrors,
+  validateExists,
+} = require("./validation");
 const { Booking } = require("../db/models");
 
 const validateSpotCreate = [
@@ -59,8 +63,8 @@ const validateReview = [
 const validateBookings = [
   check("startDate")
     .exists({ checkFalsy: true })
-    .withMessage("startDate is required"),
-
+    .withMessage("startDate is required")
+    .bail(),
   check("endDate")
     .exists({ checkFalsy: true })
     .withMessage("endDate is required")
@@ -79,12 +83,23 @@ const validateBookings = [
   handleValidationErrors,
 ];
 
+const validateBookingExists = [
+  check("startDate").custom(async (start, { req }) => {
+    const booking = await Booking.findByPk(req.params.bookingId);
+    if (!booking) {
+      const err = Error("Booking couldn't be found");
+      err.status = 404;
+      throw err;
+    }
+  }),
+  handleDateErrors,
+];
+
 const validateDates = [
   check("startDate").custom(async (start, { req }) => {
     let spotId;
     if (!req.params.spotId) {
       let booking = await Booking.findByPk(req.params.bookingId);
-
       spotId = booking.spotId;
     }
     const bookings = await Booking.findAll({
@@ -157,16 +172,16 @@ const validateQuery = [
   check("page").custom((val) => {
     if (!val) return true;
     val = parseInt(val);
-    if ((!val && val !== 0) || val < 0) {
-      throw new Error("Page must be greater than or equal to 0");
+    if (!val || val <= 0) {
+      throw new Error("Page must be greater than or equal to 1");
     }
     return true;
   }),
   check("size").custom((val) => {
     if (!val) return true;
     val = parseInt(val);
-    if ((!val && val !== 0) || val < 0) {
-      throw new Error("Size must be greater than or equal to 0");
+    if (!val || val <= 0) {
+      throw new Error("Size must be greater than or equal to 1");
     }
     return true;
   }),
@@ -219,4 +234,5 @@ module.exports = {
   validateBookings,
   validateDates,
   validateQuery,
+  validateBookingExists,
 };

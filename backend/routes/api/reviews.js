@@ -47,7 +47,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
     review.Spot.dataValues.previewImage = await setPreviewImage(review.Spot);
   }
 
-  return res.json({ reviews });
+  return res.json({ Reviews: reviews });
 });
 
 router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
@@ -62,7 +62,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
     },
   });
 
-  validateExists("Review", review, next);
+  validateExists("Review", review, next, 404);
   validateOwnership("Review", review, "userId", req.user, "id", next);
   if (review.dataValues.ReviewImages.length >= 10) {
     const err = Error("Maximum number of images for this resource was reached");
@@ -73,7 +73,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res, next) => {
   const newImg = await review.createReviewImage({
     url: req.body.url,
   });
-  res.json(newImg);
+  res.json({ id: newImg.id, url: newImg.url });
 });
 
 router.put(
@@ -83,7 +83,7 @@ router.put(
   async (req, res, next) => {
     const review = await Review.findByPk(req.params.reviewId);
 
-    validateExists("Review", review, next);
+    validateExists("Review", review, next, 404);
     validateOwnership("Review", review, "userId", req.user, "id", next);
 
     for (let key of Object.keys(req.body)) {
@@ -97,7 +97,7 @@ router.put(
 
 router.delete("/:reviewId", requireAuth, async (req, res, next) => {
   const review = await Review.findByPk(req.params.reviewId);
-  validateExists("Review", review, next);
+  validateExists("Review", review, next, 404);
   validateOwnership("Review", review, "userId", req.user, "id", next);
   await review.destroy();
   res.json({

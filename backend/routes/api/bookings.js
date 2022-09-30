@@ -14,6 +14,7 @@ const {
   validateReview,
   validateBookings,
   validateDates,
+  validateBookingExists,
 } = require("../../utils/validate-body");
 const {
   newErr,
@@ -47,6 +48,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
 router.put(
   "/:bookingId",
   requireAuth,
+  validateBookingExists,
   validateBookings,
   validateDates,
   async (req, res, next) => {
@@ -76,7 +78,7 @@ router.delete("/:bookingId", requireAuth, async (req, res, next) => {
   let today = new Date();
   let startDate = new Date(booking.startDate);
   let endDate = new Date(booking.endDate);
-  if (today > endDate) {
+  if (today > startDate) {
     const err = Error("Bookings that have been started can't be deleted");
     err.status = 403;
     return next(err);

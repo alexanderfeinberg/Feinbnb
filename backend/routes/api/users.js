@@ -53,12 +53,11 @@ router.post("/", validateSignup, async (req, res) => {
     password,
   });
 
-  setTokenCookie(res, user);
+  const token = setTokenCookie(res, user);
+  user.dataValues.token = token;
   // user.dataValues.token = setTokenCookie(res, user);
 
-  return res.json({
-    user,
-  });
+  return res.json(user);
 });
 
 module.exports = router;

@@ -15,10 +15,10 @@ const validateLogin = [
   check("credential")
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage("Please provide a valid email or username."),
+    .withMessage("Email or username is required"),
   check("password")
     .exists({ checkFalsy: true })
-    .withMessage("Please provide a password"),
+    .withMessage("Password is required"),
   handleValidationErrors,
 ];
 
@@ -40,9 +40,7 @@ router.post("/", validateLogin, async (req, res, next) => {
 
   user.dataValues.token = setTokenCookie(res, user);
   console.log(res);
-  return res.json({
-    user,
-  });
+  return res.json(user);
 });
 
 router.delete("/", (_req, res) => {
@@ -53,9 +51,7 @@ router.delete("/", (_req, res) => {
 router.get("/", requireAuth, restoreUser, (req, res) => {
   const { user } = req;
   if (user) {
-    return res.json({
-      user: user.toSafeObject(req),
-    });
+    return res.json(user.toSafeObject(req));
   } else return res.json({});
 });
 
