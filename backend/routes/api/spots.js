@@ -114,9 +114,12 @@ const setPreviewImage = async (obj) => {
     },
     attributes: ["url"],
   });
-  console.log(obj.dataValues.previewImage.url);
-
-  return obj.dataValues.previewImage.url;
+  console.log("HERE, ", obj.dataValues);
+  if (obj.dataValues.previewImage) {
+    return obj.dataValues.previewImage.url;
+  } else {
+    return (obj.dataValues.previewImage = null);
+  }
 };
 
 router.get("/:spotId/reviews", async (req, res, next) => {
