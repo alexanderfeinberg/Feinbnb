@@ -1,7 +1,5 @@
 "use strict";
 
-const { query } = require("express");
-
 const images = [
   {
     reviewId: 1,
@@ -49,7 +47,7 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
-    return queryInterface.bulkDelete("reviewImages", {
+    return queryInterface.bulkDelete("ReviewImages", {
       url: {
         [Op.in]: [
           "testid1.com",
