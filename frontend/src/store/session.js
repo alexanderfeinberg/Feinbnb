@@ -18,29 +18,17 @@ const removeUser = () => {
 
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
-  let response;
-  try {
-    response = await csrfFetch("/api/session", {
-      method: "POST",
-      body: JSON.stringify({
-        credential,
-        password,
-      }),
-    });
-
-    if (!response.ok) {
-      console.log("INVALID RESPONSE");
-    } else {
-      const data = await response.json();
-      data["ok"] = true;
-      dispatch(setUser(data));
-      return data;
-    }
-  } catch (e) {
-    if (e.status === 401) {
-      return { ok: false, message: "Invalid email/password or password" };
-    }
-  }
+  const response = await csrfFetch("/api/session", {
+    method: "POST",
+    body: JSON.stringify({
+      credential,
+      password,
+    }),
+  });
+  const data = await response.json();
+  console.log("DATA ", data);
+  dispatch(setUser(data));
+  return response;
 };
 
 const initialState = { user: null };
@@ -60,4 +48,5 @@ const sessionReducer = (state = initialState, action) => {
       return state;
   }
 };
+
 export default sessionReducer;

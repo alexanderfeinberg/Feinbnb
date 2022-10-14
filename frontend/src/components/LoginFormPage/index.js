@@ -1,68 +1,63 @@
-import { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { login } from "../../store/session";
+import React, { useState } from "react";
+import * as sessionActions from "../../store/session";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-const LoginFormPage = () => {
+function LoginFormPage() {
+  const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => {
+    console.log(state);
+    return state.session.user;
+  });
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [valErrors, setValErrors] = useState([]);
-  const [credErr, setCredErr] = useState([]);
-  let dispatch = useDispatch();
-  let history = useHistory();
+  const [errors, setErrors] = useState([]);
 
-  const handleSubmit = async (e) => {
+  if (sessionUser) {
+    console.log("USER ", sessionUser);
+    return <Redirect to="/" />;
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    let user = await dispatch(login({ credential, password }));
-    if (!user.ok) {
-      setCredErr([user.message]);
-      return;
-    }
-    console.log("USER ", user);
-    history.push("/");
+    setErrors([]);
+    return dispatch(sessionActions.login({ credential, password })).catch(
+      async (res) => {
+        const data = await res.json();
+        console.log(data);
+        if (data) setErrors([data.message]);
+      }
+    );
   };
 
-  useEffect(() => {
-    const errors = [];
-    if (!credential.length) errors.push("Email/Username is required.");
-    if (!password.length) errors.push("Password is required.");
-    if (password.length < 8)
-      errors.push("Password length must be 8 or more characters.");
-    setValErrors(errors);
-  }, [credential, password]);
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Log In</h2>
-      <ul className="errors">
-        {credErr.length > 0 && credErr.map((err) => <li key={err}>{err}</li>)}
-        {valErrors.length > 0 &&
-          valErrors.map((err) => <li key={err}>{err}</li>)}
+      <ul>
+        {errors.map((error, idx) => (
+          <li key={idx}>{error}</li>
+        ))}
       </ul>
       <label>
-        Email/Username
+        Username or Email
         <input
           type="text"
-          name="credential"
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
+          required
         />
       </label>
-
       <label>
         Password
         <input
-          type="text"
-          name="password"
+          type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
       </label>
-
-      <button type="submit" disabled={valErrors.length > 0 ? true : false}>
-        Log In
-      </button>
+      <button type="submit">Log In</button>
     </form>
   );
-};
+}
 
 export default LoginFormPage;
