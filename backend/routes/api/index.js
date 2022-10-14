@@ -19,10 +19,6 @@ router.use("/bookings", bookingRouter);
 router.use("/spot-images", imageRouter);
 router.use("/review-images", reviewImages);
 
-router.post("/test", (req, res) => {
-  res.json({ requestBody: req.body });
-});
-
 // router.get("/set-token-cookie", async (_req, res) => {
 //   const user = await User.findOne({
 //     where: {
