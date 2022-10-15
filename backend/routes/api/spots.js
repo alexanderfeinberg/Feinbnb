@@ -114,7 +114,7 @@ const setPreviewImage = async (obj) => {
     },
     attributes: ["url"],
   });
-  console.log("HERE, ", obj.dataValues);
+  // console.log("HERE, ", obj.dataValues);
   if (obj.dataValues.previewImage) {
     return obj.dataValues.previewImage.url;
   } else {
@@ -173,7 +173,7 @@ router.post(
 );
 
 router.get("/current", requireAuth, async (req, res, next) => {
-  console.log(req.user.id);
+  // console.log(req.user.id);
   let spots = await Spot.scope("getSpots").findAll({
     where: {
       ownerId: req.user.id,
@@ -186,7 +186,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
 });
 
 router.get("/:spotId", async (req, res, next) => {
-  console.log(req.params.spotId);
+  // console.log(req.params.spotId);
   let spot = await Spot.scope("getSpots").findByPk(req.params.spotId, {
     include: [
       { model: SpotImage },
@@ -247,7 +247,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res, next) => {
     });
   }
   for (let booking of bookings) {
-    console.log(booking);
+    // console.log(booking);
     booking.dataValues.startDate = booking.startDate
       .toISOString()
       .split("T")[0];
@@ -343,7 +343,7 @@ router.delete("/:spotId", requireAuth, async (req, res, next) => {
   const spot = await Spot.findByPk(req.params.spotId);
   validateExists("Spot", spot, next, 404);
   validateOwnership("Spot", spot, "ownerId", req.user, "id", next);
-  console.log(spot);
+  // console.log(spot);
   await spot.destroy();
 
   return res.json({

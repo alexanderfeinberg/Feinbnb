@@ -71,7 +71,7 @@ const validateBookings = [
     .bail()
     .custom((endDate, { req }) => {
       let end = new Date(endDate);
-      console.log(req.body.startDate);
+      // console.log(req.body.startDate);
       let start = new Date(req.body.startDate);
       if (end < start) {
         throw new Error("endDate cannot be on or before startDate");
@@ -113,11 +113,11 @@ const validateDates = [
     let endDate = new Date(req.body.endDate);
     for (let i = 0; i < bookings.length; i++) {
       let booking = bookings[i];
-      console.log(startDate);
+      // console.log(startDate);
       let bookingStart = new Date(booking.startDate);
       let bookingEnd = new Date(booking.endDate);
-      console.log(bookingEnd);
-      console.log(startDate < bookingEnd, startDate > bookingStart);
+      // console.log(bookingEnd);
+      // console.log(startDate < bookingEnd, startDate > bookingStart);
       if (startDate < bookingEnd && startDate > bookingStart) {
         const err = Error("Start date conflicts with an existing booking");
         err.status = 403;

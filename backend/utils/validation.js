@@ -2,7 +2,7 @@ const { validationResult } = require("express-validator");
 const { Booking, Spot } = require("../db/models");
 
 const validateExists = (modelName, model, next, errOverride) => {
-  console.log("MODEL, ", model);
+  // console.log("MODEL, ", model);
   errOverride = errOverride || 400;
   if (!model) {
     return newErr(`${modelName} couldn't be found.`, errOverride, next);
@@ -11,7 +11,7 @@ const validateExists = (modelName, model, next, errOverride) => {
 
 const validateOwnership = (modelName, model, modelKey, user, userKey, next) => {
   if (model[modelKey] !== user[userKey]) {
-    console.log(`Forbidden`);
+    // console.log(`Forbidden`);
     return newErr(`Forbidden`, 403, next);
   }
 };
@@ -54,7 +54,7 @@ const newErr = (message, status, next) => {
 
 const handleValidationErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
-  console.log(validationErrors);
+  // console.log(validationErrors);
   if (!validationErrors.isEmpty()) {
     const errors = validationErrors.array().map((error) => `${error.msg}`);
     const err = Error("Bad request.");
@@ -68,7 +68,7 @@ const handleValidationErrors = (req, _res, next) => {
 };
 const handleDateErrors = (req, _res, next) => {
   const validationErrors = validationResult(req);
-  console.log(validationErrors);
+  // console.log(validationErrors);
   if (!validationErrors.isEmpty()) {
     const errors = validationErrors.array().map((error) => `${error.msg}`);
     let err = Error(

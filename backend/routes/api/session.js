@@ -33,13 +33,13 @@ router.post("/", validateLogin, async (req, res, next) => {
     // err.title = "Login failed";
     // err.errors = ["The provided credentials were invalid"];
     err.message = "Invalid credentials";
-    console.log(err);
+    // console.log(err);
     // return next(err);
     return res.json({ message: err.message, ...err });
   }
 
   user.dataValues.token = setTokenCookie(res, user);
-  console.log(res);
+  // console.log(res);
   return res.json(user);
 });
 

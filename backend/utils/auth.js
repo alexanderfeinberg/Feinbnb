@@ -12,7 +12,7 @@ const setTokenCookie = (res, user) => {
     { expiresIn: parseInt(expiresIn) } // 604,800 seconds = 1 week
   );
 
-  console.log(token);
+  // console.log(token);
 
   const isProduction = process.env.NODE_ENV === "production";
 
@@ -52,7 +52,7 @@ const restoreUser = (req, res, next) => {
 };
 
 const requireAuth = function (req, _res, next) {
-  console.log(req.user);
+  // console.log(req.user);
   if (req.user) return next();
 
   const err = new Error("Authentication required");

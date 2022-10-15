@@ -37,7 +37,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
   for (let i = 0; i < bookings.length; i++) {
     let booking = bookings[i];
     booking.Spot.dataValues.previewImage = await setPreviewImage(booking.Spot);
-    console.log(booking.Spot);
+    // console.log(booking.Spot);
   }
 
   res.json({ Bookings: bookings });

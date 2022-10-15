@@ -8,7 +8,7 @@ import "./LoginForm.css";
 function LoginForm() {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => {
-    console.log(state);
+    // console.log(state);
     return state.session.user;
   });
   const [credential, setCredential] = useState("");
@@ -25,7 +25,7 @@ function LoginForm() {
     return dispatch(sessionActions.login({ credential, password })).catch(
       async (res) => {
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
         if (data) setErrors([data.message]);
       }
     );
