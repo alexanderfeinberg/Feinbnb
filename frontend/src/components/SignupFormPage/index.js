@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
+import { MenuContext } from "../../context/MenuModal";
 
 function SignupFormPage() {
   // console.log("SIGNUP");
@@ -13,6 +14,7 @@ function SignupFormPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState([]);
+  const { showModal, setShowModal } = useContext(MenuContext);
 
   if (sessionUser) return <Redirect to="/" />;
 
@@ -20,12 +22,12 @@ function SignupFormPage() {
     e.preventDefault();
     if (password === confirmPassword) {
       setErrors([]);
-      return dispatch(
-        sessionActions.signup({ email, username, password })
-      ).catch(async (res) => {
-        const data = await res.json();
-        if (data) setErrors([data]);
-      });
+      return dispatch(sessionActions.signup({ email, username, password }))
+        .then(() => setShowModal(false))
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data) setErrors([data]);
+        });
     }
     return setErrors([
       "Confirm Password field must be the same as the Password field",

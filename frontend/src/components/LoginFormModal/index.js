@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Modal } from "../../context/Modal";
 import LoginForm from "./LoginForm";
+import { MenuContext } from "../../context/MenuModal";
 
 function LoginFormModal() {
-  const [showModal, setShowModal] = useState(false);
-
+  const { showModal, setShowModal } = useContext(MenuContext);
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Log In</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <LoginForm />
