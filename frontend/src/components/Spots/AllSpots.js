@@ -20,7 +20,7 @@ const AllSpots = ({ isCurrent }) => {
   );
   const user = useSelector((state) => state.session.user);
 
-  console.log("USER SPOTS ", spots);
+  console.log("USER SPOTS ", spots, isLoaded);
 
   useEffect(() => {
     console.log("USEFFECT");
