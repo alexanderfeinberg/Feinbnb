@@ -25,12 +25,12 @@ const AllSpots = ({ isCurrent }) => {
   useEffect(() => {
     console.log("USEFFECT");
     if (!isCurrent) dispatch(getAllSpotsThunk()).then(() => setIsLoaded(true));
-
+    if (isCurrent && !user) return;
     if (isCurrent)
       dispatch(getUserSpotsThunk(user)).then(() => setIsLoaded(true));
-  }, [dispatch, isCurrent]);
 
-  if (isCurrent && !user) return <h2>Please login to view your spots!</h2>;
+    return () => setIsLoaded(false);
+  }, [dispatch, isCurrent, user]);
 
   const handleClick = (e) => {
     console.log(e);
@@ -73,7 +73,12 @@ const AllSpots = ({ isCurrent }) => {
         </div>
       </>
     );
-  } else return null;
+  } else {
+    if (isCurrent && !user) {
+      return <h2>Please login to view your spots!</h2>;
+    }
+    return null;
+  }
 };
 
 export default AllSpots;
