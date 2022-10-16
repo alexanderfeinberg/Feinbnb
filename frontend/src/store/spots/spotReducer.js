@@ -16,13 +16,15 @@ const spotReducer = (state = initialState, action) => {
   let spots;
   switch (action.type) {
     case LOAD_ALL_SPOTS:
+      console.log(" LOAD ALL STATE ", state);
       spots = {};
       action.spots["Spots"].forEach((spot) => (spots[spot.id] = spot));
-      console.log("SPOTS ", spots);
+      console.log("LOAD ALL SPOTS ", spots);
       return { ...state, ...spots };
     case LOAD_SPOT:
       console.log("STATE ", state);
       spots = { ...state.spots, [action.spot.id]: action.spot };
+      console.log("LOAD SPOT ", spots);
       return { ...state, ...spots };
     case LOAD_ALL_SPOTS_USER:
       const userSpots = {};
@@ -33,6 +35,11 @@ const spotReducer = (state = initialState, action) => {
       console.log("STATE ", state);
       spots = { ...state.spots, [action.spot.id]: action.spot };
       return { ...state, ...spots };
+    case DELETE_SPOT:
+      spots = { ...state };
+      delete spots[action.spot.id];
+
+      return { ...spots };
 
     default:
       return state;
