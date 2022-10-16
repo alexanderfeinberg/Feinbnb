@@ -19,21 +19,22 @@ function App() {
     <>
       <MenuProvider>
         <Navigation isLoaded={isLoaded} />
+
+        {isLoaded && (
+          <Switch>
+            <Route exact path="/">
+              {/* <SignupFormPage /> */}
+              <AllSpots isCurrent={false} />
+            </Route>
+            <Route exact path="/spots/current">
+              <AllSpots isCurrent={true} />
+            </Route>
+            <Route path="/spots/:spotId">
+              <SingleSpot />
+            </Route>
+          </Switch>
+        )}
       </MenuProvider>
-      {isLoaded && (
-        <Switch>
-          <Route exact path="/">
-            {/* <SignupFormPage /> */}
-            <AllSpots isCurrent={false} />
-          </Route>
-          <Route exact path="/spots/current">
-            <AllSpots isCurrent={true} />
-          </Route>
-          <Route path="/spots/:spotId">
-            <SingleSpot />
-          </Route>
-        </Switch>
-      )}
     </>
   );
 }

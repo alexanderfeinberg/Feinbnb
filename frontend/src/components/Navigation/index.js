@@ -10,14 +10,22 @@ import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
-  const { showModal, setShowModal } = useContext(MenuContext);
+  const { showModal, setShowModal, defaultValue, setDefaultValue } =
+    useContext(MenuContext);
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
       <>
         <ProfileButton user={sessionUser} />
-        <button onClick={() => setShowModal("createSpot")}>Create Spot</button>
+        <button
+          onClick={() => {
+            setDefaultValue(false);
+            setShowModal("createSpot");
+          }}
+        >
+          Create Spot
+        </button>
         <CreateSpotFormModal />
       </>
     );

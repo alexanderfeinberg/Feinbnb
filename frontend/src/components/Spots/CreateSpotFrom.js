@@ -1,23 +1,25 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addSpotThunk } from "../../store/spots/spotThunks";
+import { addSpotThunk, updateSpotThunk } from "../../store/spots/spotThunks";
 import { MenuContext } from "../../context/MenuModal";
 
 function CreateSpotForm() {
   let dispatch = useDispatch();
   let history = useHistory();
-  const { showModal, setShowModal } = useContext(MenuContext);
+  const { showModal, setShowModal, defaultValue, setDefaultValue } =
+    useContext(MenuContext);
+  let spot = defaultValue;
 
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [lat, setLat] = useState(0);
-  const [long, setLong] = useState(0);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const [address, setAddress] = useState(spot ? spot.address : "");
+  const [city, setCity] = useState(spot ? spot.city : "");
+  const [state, setState] = useState(spot ? spot.state : "");
+  const [country, setCountry] = useState(spot ? spot.country : "");
+  const [lat, setLat] = useState(spot ? spot.lat : 0);
+  const [long, setLong] = useState(spot ? spot.lng : 0);
+  const [name, setName] = useState(spot ? spot.name : "");
+  const [description, setDescription] = useState(spot ? spot.description : "");
+  const [price, setPrice] = useState(spot ? spot.price : 0);
   const [errors, setErrors] = useState([]);
 
   const handleSubmit = (e) => {
@@ -34,16 +36,30 @@ function CreateSpotForm() {
       description,
       price,
     };
-
-    return dispatch(addSpotThunk(newSpot))
-      .then((spot) => {
-        setShowModal(false);
-        history.push(`/spots/${spot.id}`);
-      })
-      .catch(async (res) => {
-        const data = await data.json();
-        if (data) setErrors([data.message]);
-      });
+    if (!spot)
+      return dispatch(addSpotThunk(newSpot))
+        .then((resSpot) => {
+          setShowModal(false);
+          history.push(`/spots/${resSpot.id}`);
+        })
+        .catch(async (res) => {
+          const data = await data.json();
+          if (data) setErrors([data.message]);
+        });
+    else if (spot) {
+      for (let key of Object.keys(newSpot)) {
+        spot[key] = newSpot[key];
+      }
+      return dispatch(updateSpotThunk(spot))
+        .then((resSpot) => {
+          setShowModal(false);
+          history.push(`/spots/${resSpot.id}`);
+        })
+        .catch(async (res) => {
+          const data = await data.json();
+          if (data) setErrors([data.message]);
+        });
+    }
   };
   return (
     <>
@@ -138,7 +154,7 @@ function CreateSpotForm() {
             required
           />
         </label>
-        <button type="submit">Create Spot</button>
+        <button type="submit">{spot ? `Update Spot` : `Create Spot`}</button>
       </form>
     </>
   );

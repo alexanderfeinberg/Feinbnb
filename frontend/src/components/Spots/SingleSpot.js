@@ -1,10 +1,14 @@
 import { useParams, useHistory } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotThunk, deleteSpotThunk } from "../../store/spots/spotThunks";
 import "./SingleSpot.css";
+import { MenuContext } from "../../context/MenuModal";
+import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
 
 const SingleSpot = () => {
+  const { showModal, setShowModal, defaultValue, setDefaultValue } =
+    useContext(MenuContext);
   const { spotId } = useParams();
   let dispatch = useDispatch();
   let history = useHistory();
@@ -14,11 +18,19 @@ const SingleSpot = () => {
     console.log("USE SELECTOR STATE ", state);
     return state.session.user;
   });
+
+  console.log("SINGLE SPOT ", spot);
+
   // console.log("USER ID ", user.id, spot.ownerId);
 
   const handleDelete = (e) => {
     dispatch(deleteSpotThunk(spot));
     history.push("/spots/current");
+  };
+
+  const handleEdit = (e) => {
+    setShowModal("createSpot");
+    setDefaultValue(spot);
   };
 
   useEffect(() => {
@@ -32,8 +44,13 @@ const SingleSpot = () => {
           <div className="top-line">
             <div className="top-title">
               <h2>{spot.name}</h2>
-              {spot.ownerId === user.id && (
-                <button onClick={handleDelete}>Delete Spot</button>
+
+              <CreateSpotFormModal />
+              {user && spot.ownerId === user.id && (
+                <div className="action-buttons">
+                  <button onClick={handleEdit}>Edit Spot</button>
+                  <button onClick={handleDelete}>Delete Spot</button>
+                </div>
               )}
             </div>
             <div className="top-subtitle">
