@@ -1,19 +1,19 @@
-import React, { useState, useContext } from "react";
+import { useContext } from "react";
 import { Modal } from "../../context/Modal";
-import LoginForm from "./LoginForm";
 import { MenuContext } from "../../context/MenuModal";
+import CreateSpotForm from "./CreateSpotFrom";
 
-function LoginFormModal() {
+function CreateSpotFormModal() {
   const { showModal, setShowModal } = useContext(MenuContext);
   return (
     <>
-      {showModal === "login" && (
+      {showModal === "createSpot" && (
         <Modal onClose={() => setShowModal(false)}>
-          <LoginForm />
+          <CreateSpotForm />
         </Modal>
       )}
     </>
   );
 }
 
-export default LoginFormModal;
+export default CreateSpotFormModal;

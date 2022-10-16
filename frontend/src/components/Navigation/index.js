@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import LoginFormModal from "../LoginFormModal";
+import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
 import { MenuContext } from "../../context/MenuModal";
 
 import "./Navigation.css";
@@ -17,10 +18,12 @@ function Navigation({ isLoaded }) {
   } else {
     sessionLinks = (
       <>
-        <button onClick={() => setShowModal(true)}>
+        <button onClick={() => setShowModal("login")}>
           <i className="fas fa-user-circle" />
         </button>
         <LoginFormModal />
+        <button onClick={() => setShowModal("createSpot")}>Create Spot</button>
+        <CreateSpotFormModal />
       </>
     );
   }

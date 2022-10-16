@@ -14,7 +14,6 @@ const AllSpots = ({ isCurrent }) => {
   let history = useHistory();
 
   const [isLoaded, setIsLoaded] = useState(false);
-  console.log("IS LOADED ", isLoaded);
 
   const spots = useSelector((state) =>
     isCurrent ? state.spots["userSpots"] : state.spots
@@ -30,6 +29,8 @@ const AllSpots = ({ isCurrent }) => {
     if (isCurrent)
       dispatch(getUserSpotsThunk(user)).then(() => setIsLoaded(true));
   }, [dispatch, isCurrent]);
+
+  if (isCurrent && !user) return <h2>Please login to view your spots!</h2>;
 
   const handleClick = (e) => {
     console.log(e);
