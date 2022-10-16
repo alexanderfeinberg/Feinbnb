@@ -14,7 +14,13 @@ function Navigation({ isLoaded }) {
 
   let sessionLinks;
   if (sessionUser) {
-    sessionLinks = <ProfileButton user={sessionUser} />;
+    sessionLinks = (
+      <>
+        <ProfileButton user={sessionUser} />
+        <button onClick={() => setShowModal("createSpot")}>Create Spot</button>
+        <CreateSpotFormModal />
+      </>
+    );
   } else {
     sessionLinks = (
       <>
@@ -22,8 +28,6 @@ function Navigation({ isLoaded }) {
           <i className="fas fa-user-circle" />
         </button>
         <LoginFormModal />
-        <button onClick={() => setShowModal("createSpot")}>Create Spot</button>
-        <CreateSpotFormModal />
       </>
     );
   }

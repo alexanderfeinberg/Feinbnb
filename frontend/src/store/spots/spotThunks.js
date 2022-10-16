@@ -7,8 +7,10 @@ import {
   deleteSpot,
 } from "./spotAction";
 
+import { csrfFetch } from "../csrf";
+
 export const getAllSpotsThunk = () => async (dispatch) => {
-  const response = await fetch("/api/spots");
+  const response = await csrfFetch("/api/spots");
   if (response.ok) {
     const spots = await response.json();
     console.log("BACKEND SPOTS ", spots);
@@ -18,7 +20,7 @@ export const getAllSpotsThunk = () => async (dispatch) => {
 };
 
 export const getUserSpotsThunk = (user) => async (dispatch) => {
-  const response = await fetch("/api/spots/current");
+  const response = await csrfFetch("/api/spots/current");
   if (response.ok) {
     const spots = await response.json();
     dispatch(loadAllUser(spots));
@@ -27,7 +29,7 @@ export const getUserSpotsThunk = (user) => async (dispatch) => {
 };
 
 export const getSpotThunk = (spotId) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}`);
+  const response = await csrfFetch(`/api/spots/${spotId}`);
   if (response.ok) {
     const spot = await response.json();
     dispatch(loadSpot(spot));
@@ -36,7 +38,7 @@ export const getSpotThunk = (spotId) => async (dispatch) => {
 };
 
 export const addSpotThunk = (spot) => async (dispatch) => {
-  const response = await fetch("/api/spots", {
+  const response = await csrfFetch("/api/spots", {
     method: "POST",
     body: JSON.stringify(spot),
   });
@@ -48,7 +50,7 @@ export const addSpotThunk = (spot) => async (dispatch) => {
 };
 
 export const updateSpotThunk = (spot) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spot.id}`, {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: "PUT",
     body: JSON.stringify(spot),
   });
@@ -60,7 +62,7 @@ export const updateSpotThunk = (spot) => async (dispatch) => {
 };
 
 export const deleteSpotThunk = (spot) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spot.id}`, {
+  const response = await csrfFetch(`/api/spots/${spot.id}`, {
     method: "DELETE",
   });
   if (response.ok) {
