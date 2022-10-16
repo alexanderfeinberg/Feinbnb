@@ -5,6 +5,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { MenuProvider } from "./context/MenuModal";
+import AllSpots from "./components/Spots/AllSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -20,8 +21,9 @@ function App() {
       </MenuProvider>
       {isLoaded && (
         <Switch>
-          <Route path="/signup">
-            <SignupFormPage />
+          <Route exact path="/">
+            {/* <SignupFormPage /> */}
+            <AllSpots />
           </Route>
         </Switch>
       )}

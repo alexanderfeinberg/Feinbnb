@@ -1,0 +1,32 @@
+.all-spots {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.spot-image {
+  border: 0.1rem solid black;
+  border-radius: 0.5rem;
+  height: 200px;
+}
+
+.bottom-details {
+  padding: 0.35rem;
+}
+.top-line {
+  display: flex;
+  justify-content: space-between;
+}
+.location {
+  width: 80%;
+}
+
+.individual-spot:not(.top-line) {
+  display: flex;
+  flex-direction: column;
+  border: 0.1rem solid black;
+  border-radius: 0.5rem;
+  padding: 2px;
+  margin: 0.25rem;
+  width: 240px;
+}

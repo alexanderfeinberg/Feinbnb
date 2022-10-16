@@ -11,7 +11,8 @@ export const getAllSpotsThunk = () => async (dispatch) => {
   const response = await fetch("/api/spots");
   if (response.ok) {
     const spots = await response.json();
-    dispatch(loadAll());
+    console.log("BACKEND SPOTS ", spots);
+    dispatch(loadAll(spots));
     return spots;
   }
 };
