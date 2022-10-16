@@ -11,8 +11,8 @@ export const loadAll = (spots) => {
   return { type: LOAD_ALL_SPOTS, spots: spots };
 };
 
-export const loadAllUser = (user) => {
-  return { type: LOAD_ALL_SPOTS_USER, user: user };
+export const loadAllUser = (spots) => {
+  return { type: LOAD_ALL_SPOTS_USER, spots: spots };
 };
 
 export const loadSpot = (spot) => {

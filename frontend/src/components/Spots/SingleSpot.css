@@ -1,0 +1,12 @@
+.spot-details {
+  margin: 15px;
+}
+.top-line {
+  display: flex;
+  flex-direction: column;
+}
+
+.top-subtitle {
+  display: flex;
+  justify-content: space-between;
+}

@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { MenuProvider } from "./context/MenuModal";
 import AllSpots from "./components/Spots/AllSpots";
+import SingleSpot from "./components/Spots/SingleSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +24,13 @@ function App() {
         <Switch>
           <Route exact path="/">
             {/* <SignupFormPage /> */}
-            <AllSpots />
+            <AllSpots isCurrent={false} />
+          </Route>
+          <Route exact path="/spots/current">
+            <AllSpots isCurrent={true} />
+          </Route>
+          <Route path="/spots/:spotId">
+            <SingleSpot />
           </Route>
         </Switch>
       )}

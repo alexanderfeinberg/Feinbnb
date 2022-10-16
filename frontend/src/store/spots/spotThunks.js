@@ -21,13 +21,13 @@ export const getUserSpotsThunk = (user) => async (dispatch) => {
   const response = await fetch("/api/spots/current");
   if (response.ok) {
     const spots = await response.json();
-    dispatch(loadAllUser(user));
+    dispatch(loadAllUser(spots));
     return spots;
   }
 };
 
-export const getSpotThunk = (spot) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spot.id}`);
+export const getSpotThunk = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}`);
   if (response.ok) {
     const spot = await response.json();
     dispatch(loadSpot(spot));
