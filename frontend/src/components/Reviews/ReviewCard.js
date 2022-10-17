@@ -1,6 +1,7 @@
 import "./ReviewCard.css";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { deleteReviewThunk } from "../../store/reviews/reviewThunk";
+import { useHistory } from "react-router-dom";
 const months = {
   "01": "January",
   "02": "Febuary",
@@ -26,8 +27,17 @@ const formatDate = (date) => {
 
 const ReviewCard = ({ review }) => {
   const user = useSelector((state) => state.session.user);
+  let dispatch = useDispatch();
+  let history = useHistory();
+
   if (!review.id) return null;
   const { year, month } = formatDate(review["createdAt"]);
+
+  const handleDelete = (e) => {
+    const id = e.target.getAttribute("data-remove");
+    dispatch(deleteReviewThunk(id));
+    history.push("/reviews/current");
+  };
 
   return (
     <div className="review-card">
@@ -35,7 +45,9 @@ const ReviewCard = ({ review }) => {
         <div className="review-title">
           <div className="review-name">{review["User"]["firstName"]}</div>
           <div className="review-delete">
-            <button>Delete</button>
+            <button onClick={handleDelete} data-remove={review.id}>
+              Delete
+            </button>
           </div>
         </div>
         <div className="review-date">

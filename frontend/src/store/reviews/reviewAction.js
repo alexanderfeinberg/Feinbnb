@@ -16,8 +16,8 @@ export const addReview = (spot, review) => {
   return { type: ADD_REVIEW, spot: spot, review: review };
 };
 
-export const deleteReview = (spot, review) => {
-  return { type: DELETE_REVIEW, spot: spot, review: review };
+export const deleteReview = (reviewId) => {
+  return { type: DELETE_REVIEW, reviewId: reviewId };
 };
 
 export const updateReview = (spot, review) => {

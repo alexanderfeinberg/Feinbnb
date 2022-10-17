@@ -9,7 +9,8 @@ const UserReviewWrapper = () => {
   const user = useSelector((state) => state.session.user);
   console.log("USER  ", user);
   const reviews = useSelector((state) => {
-    return state.reviews[user.id] ? state.reviews[user.id]["Reviews"] : null;
+    console.log("USER REVIEW STATE ", state);
+    return state.reviews ? state.reviews : null;
   });
 
   useEffect(() => {

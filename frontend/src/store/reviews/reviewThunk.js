@@ -24,3 +24,14 @@ export const getUserReviewsThunk = (userId) => async (dispatch) => {
     return reviews;
   }
 };
+
+export const deleteReviewThunk = (reviewId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+    method: "DELETE",
+  });
+  if (response.ok) {
+    const message = await response.json();
+    dispatch(deleteReview(reviewId));
+    return message;
+  }
+};

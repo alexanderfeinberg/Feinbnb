@@ -16,7 +16,18 @@ const reviewReducer = (state = initialState, action) => {
       console.log("REVIEWS ", action);
       return { ...state, ...action.reviews };
     case LOAD_USER_REVIEWS:
-      return { ...state, [action.userId]: { ...action.reviews } };
+      console.log("LOAD USER STATE ", state);
+      const reviews = {};
+      const userReviews = action.reviews["Reviews"];
+      userReviews.forEach((review) => (reviews[review.id] = review));
+      console.log("REVIEWSSS ", reviews);
+      return { ...state, ...reviews };
+    case DELETE_REVIEW:
+      console.log("STATE ", state);
+      const newState = Object.assign({}, state);
+      delete newState[action.reviewId];
+      return newState;
+
     default:
       return state;
   }
