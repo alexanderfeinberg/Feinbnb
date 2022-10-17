@@ -19,3 +19,7 @@
 .top-title > button {
   height: 100%;
 }
+
+.review-header {
+  display: flex;
+}

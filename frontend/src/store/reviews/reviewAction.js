@@ -4,8 +4,8 @@ export const ADD_REVIEW = "spot/reviews/ADD";
 export const DELETE_REVIEW = "spot/reviews/DELETE";
 export const UPDATE_REVIEW = "spot/reviews/UPDATE";
 
-export const loadSpotReviews = (spot, reviews) => {
-  return { type: LOAD_SPOT_REVIEWS, spot: spot, reviews: reviews };
+export const loadSpotReviews = (reviews) => {
+  return { type: LOAD_SPOT_REVIEWS, reviews: reviews };
 };
 
 export const loadUserReviews = (user, reviews) => {
