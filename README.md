@@ -1,10 +1,15 @@
-# AirBnB Clone
+# Feinbnb
 
 ## Database Schema Design
 
 ![airbnb-dbdiagram]
 
-[airbnb-dbdiagram]: ../assets/airbnb_dbdiagram.png
+[airbnb-dbdiagram]: airbnb_dbdiagram.png
+
+## Features:
+
+- Spots: CRUD
+- Reviews: CRUD
 
 ## API Documentation
 
