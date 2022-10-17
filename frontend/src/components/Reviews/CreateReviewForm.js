@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addReviewThunk } from "../../store/reviews/reviewThunk";
 import { MenuContext } from "../../context/MenuModal";
+import { getSpotThunk } from "../../store/spots/spotThunks";
 
 const CreateSpotForm = ({ spot }) => {
   console.log("FORM SPOT", spot);
@@ -26,6 +27,7 @@ const CreateSpotForm = ({ spot }) => {
       .then((res) => {
         setShowModal(false);
       })
+      .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
       .catch(async (res) => {
         const data = await res.json();
         if (data) setErrors([data]);

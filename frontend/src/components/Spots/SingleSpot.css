@@ -1,7 +1,7 @@
 .spot-details {
   margin: 15px;
 }
-.top-line {
+.top-line-single {
   display: flex;
   flex-direction: column;
 }

@@ -45,13 +45,12 @@ const AllSpots = ({ isCurrent }) => {
           {Object.values(spots).map((spot) => {
             return (
               <div key={spot.id} value={spot.id} className="individual-spot">
-                <div
-                  className="spot-image"
-                  value={spot.id}
-                  onClick={(e) => handleClick(e.target.getAttribute("value"))}
-                >
-                  {/* <img src={`${spot.previewImage}`} /> */}
-                  Image
+                <div className="spot-image">
+                  <img
+                    value={spot.id}
+                    onClick={(e) => handleClick(e.target.getAttribute("value"))}
+                    src="https://a0.muscache.com/im/pictures/miso/Hosting-46695796/original/9bd67185-dc83-4473-a191-9486c62aec66.jpeg?im_w=1440"
+                  />
                 </div>
 
                 <div className="bottom-details" key={`details-${spot.id}`}>

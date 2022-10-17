@@ -41,14 +41,14 @@ function Navigation({ isLoaded }) {
   }
 
   return (
-    <ul>
-      <li>
+    <div className="nav-bar">
+      <div className="home-link">
         <NavLink exact to="/">
           Home
         </NavLink>
-        {isLoaded && sessionLinks}
-      </li>
-    </ul>
+      </div>
+      <div className="action-btn">{isLoaded && sessionLinks}</div>
+    </div>
   );
 }
 

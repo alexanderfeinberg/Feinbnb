@@ -8,6 +8,8 @@ import { MenuProvider } from "./context/MenuModal";
 import AllSpots from "./components/Spots/AllSpots";
 import SingleSpot from "./components/Spots/SingleSpot";
 import UserReviewWrapper from "./components/Reviews/UserReviewWrapper";
+import ReviewContextProvider from "./context/reviewCountStarContext";
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -21,21 +23,23 @@ function App() {
         <Navigation isLoaded={isLoaded} />
 
         {isLoaded && (
-          <Switch>
-            <Route exact path="/">
-              {/* <SignupFormPage /> */}
-              <AllSpots isCurrent={false} />
-            </Route>
-            <Route exact path="/spots/current">
-              <AllSpots isCurrent={true} />
-            </Route>
-            <Route path="/spots/:spotId">
-              <SingleSpot />
-            </Route>
-            <Route exact path="/reviews/current">
-              <UserReviewWrapper />
-            </Route>
-          </Switch>
+          <ReviewContextProvider>
+            <Switch>
+              <Route exact path="/">
+                {/* <SignupFormPage /> */}
+                <AllSpots isCurrent={false} />
+              </Route>
+              <Route exact path="/spots/current">
+                <AllSpots isCurrent={true} />
+              </Route>
+              <Route path="/spots/:spotId">
+                <SingleSpot />
+              </Route>
+              <Route exact path="/reviews/current">
+                <UserReviewWrapper />
+              </Route>
+            </Switch>
+          </ReviewContextProvider>
         )}
       </MenuProvider>
     </>

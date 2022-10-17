@@ -7,11 +7,15 @@ import "./SingleSpot.css";
 import { MenuContext } from "../../context/MenuModal";
 import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
 import AllReviews from "../Reviews/AllReviews";
+import { useReviewContext } from "../../context/reviewCountStarContext";
 
 const SingleSpot = () => {
   console.log("SINGLE SPOT RENDER");
   const { showModal, setShowModal, defaultValue, setDefaultValue } =
     useContext(MenuContext);
+
+  const { numReviews, setNumReviews, starRating, setStarRating } =
+    useReviewContext();
 
   const { spotId } = useParams();
 
@@ -20,11 +24,17 @@ const SingleSpot = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   console.log("IS LOADED ", isLoaded);
-  const [numberOfReviews, setNumberOfReviews] = useState(0);
-  const spot = useSelector((state) => state.spots[spotId]);
+  const spot = useSelector((state) => {
+    console.log("SELECTING SPOT....", state);
+    setStarRating(state.spots[spotId] ? state.spots[spotId].avgRating : null);
+    return state.spots[spotId];
+  });
   const user = useSelector((state) => state.session.user);
   const reviews = useSelector((state) => {
-    console.log("REIVEW STATEEE ", state);
+    console.log("SELECTING REVIEWS....");
+    setNumReviews(
+      state.reviews[spotId] ? Object.values(state.reviews[spotId]).length : 0
+    );
     return state.reviews[spotId] ? state.reviews[spotId] : null;
   });
   console.log("REVIEWS ", reviews);
@@ -46,7 +56,6 @@ const SingleSpot = () => {
 
     dispatch(getSpotThunk(spotId)).then((res) => {});
     dispatch(getSpotReviewsThunk(spotId)).then((res) => {
-      setNumberOfReviews(res["Reviews"].length);
       setIsLoaded(true);
     });
 
@@ -57,7 +66,7 @@ const SingleSpot = () => {
     return (
       <div className="spot-details">
         <div className="top-details">
-          <div className="top-line">
+          <div className="top-line-single">
             <div className="top-title">
               <h2>{spot.name}</h2>
 
@@ -72,9 +81,9 @@ const SingleSpot = () => {
             <div className="top-subtitle">
               <div className="stars">
                 <i className="fa fa-star" aria-hidden="true"></i>
-                {spot.avgRating}
+                {starRating}
               </div>
-              <div className="ratingsCount">{numberOfReviews} reviews</div>
+              <div className="ratingsCount">{numReviews} reviews</div>
               <div className="host">Host: {spot.ownerId}</div>
               <div className="location">
                 {spot.city}, {spot.state}, {spot.country}
@@ -84,9 +93,7 @@ const SingleSpot = () => {
         </div>
         <div className="bottom-details">
           <div className="review-section">
-            <AllReviews
-              props={{ reviews, spot, numberOfReviews: numberOfReviews }}
-            />
+            <AllReviews props={{ reviews, spot }} />
           </div>
         </div>
       </div>
