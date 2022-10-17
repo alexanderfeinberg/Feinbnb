@@ -1,4 +1,5 @@
 import "./ReviewCard.css";
+import { useSelector } from "react-redux";
 
 const months = {
   "01": "January",
@@ -24,13 +25,19 @@ const formatDate = (date) => {
 };
 
 const ReviewCard = ({ review }) => {
+  const user = useSelector((state) => state.session.user);
   if (!review.id) return null;
   const { year, month } = formatDate(review["createdAt"]);
 
   return (
     <div className="review-card">
       <div className="top-half">
-        <div className="review-name">{review["User"]["firstName"]}</div>
+        <div className="review-title">
+          <div className="review-name">{review["User"]["firstName"]}</div>
+          <div className="review-delete">
+            <button>Delete</button>
+          </div>
+        </div>
         <div className="review-date">
           {month} {year}
         </div>

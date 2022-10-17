@@ -15,3 +15,12 @@ export const getSpotReviewsThunk = (spotId) => async (dispatch) => {
     return reviews;
   }
 };
+
+export const getUserReviewsThunk = (userId) => async (dispatch) => {
+  const response = await csrfFetch("/api/reviews/current");
+  if (response.ok) {
+    const reviews = await response.json();
+    dispatch(loadUserReviews(userId, reviews));
+    return reviews;
+  }
+};

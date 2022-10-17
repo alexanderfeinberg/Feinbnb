@@ -6,7 +6,7 @@ import { getSpotReviewsThunk } from "../../store/reviews/reviewThunk";
 import "./SingleSpot.css";
 import { MenuContext } from "../../context/MenuModal";
 import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
-import ReviewCard from "../Reviews/ReviewCard";
+import AllReviews from "../Reviews/AllReviews";
 
 const SingleSpot = () => {
   const { showModal, setShowModal, defaultValue, setDefaultValue } =
@@ -17,9 +17,12 @@ const SingleSpot = () => {
   let history = useHistory();
 
   const [isLoaded, setIsLoaded] = useState(false);
+  console.log("IS LOADED ", isLoaded);
+  const [numberOfReviews, setNumberOfReviews] = useState(0);
   const spot = useSelector((state) => state.spots[spotId]);
   const user = useSelector((state) => state.session.user);
   const reviews = useSelector((state) => state.reviews);
+  console.log("SPOT", spot);
 
   // console.log("USER ID ", user.id, spot.ownerId);
 
@@ -34,11 +37,17 @@ const SingleSpot = () => {
   };
 
   useEffect(() => {
-    dispatch(getSpotThunk(spotId)).then((res) => setIsLoaded(true));
-    dispatch(getSpotReviewsThunk(spotId)).then((res) => setIsLoaded(true));
+    console.log("USE EFFECT");
+    dispatch(getSpotThunk(spotId)).then((res) => {});
+    dispatch(getSpotReviewsThunk(spotId)).then((res) => {
+      setNumberOfReviews(res["Reviews"].length);
+      setIsLoaded(true);
+    });
+
+    return () => setIsLoaded(false);
   }, [dispatch]);
 
-  if (isLoaded) {
+  if (spot) {
     return (
       <div className="spot-details">
         <div className="top-details">
@@ -59,7 +68,7 @@ const SingleSpot = () => {
                 <i className="fa fa-star" aria-hidden="true"></i>
                 {spot.avgRating}
               </div>
-              <div className="ratingsCount">86 reviews</div>
+              <div className="ratingsCount">{numberOfReviews} reviews</div>
               <div className="host">Host: {spot.ownerId}</div>
               <div className="location">
                 {spot.city}, {spot.state}, {spot.country}
@@ -69,20 +78,9 @@ const SingleSpot = () => {
         </div>
         <div className="bottom-details">
           <div className="review-section">
-            <div className="review-header">
-              <div className="star-rating">
-                <i className="fa fa-star" aria-hidden="true"></i>
-                {spot.avgRating} ·
-              </div>
-              <div className="rating-count">
-                {Object.values(reviews).length} reviews
-              </div>
-            </div>
-            <div className="review-content">
-              {Object.values(reviews).map((review) => (
-                <ReviewCard key={review.id} review={review} />
-              ))}
-            </div>
+            <AllReviews
+              props={{ reviews, spot, numberOfReviews: numberOfReviews }}
+            />
           </div>
         </div>
       </div>

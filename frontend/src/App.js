@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import { MenuProvider } from "./context/MenuModal";
 import AllSpots from "./components/Spots/AllSpots";
 import SingleSpot from "./components/Spots/SingleSpot";
+import UserReviewWrapper from "./components/Reviews/UserReviewWrapper";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function App() {
             </Route>
             <Route path="/spots/:spotId">
               <SingleSpot />
+            </Route>
+            <Route exact path="/reviews/current">
+              <UserReviewWrapper />
             </Route>
           </Switch>
         )}

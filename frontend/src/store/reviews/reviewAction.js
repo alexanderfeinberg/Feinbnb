@@ -8,8 +8,8 @@ export const loadSpotReviews = (reviews) => {
   return { type: LOAD_SPOT_REVIEWS, reviews: reviews };
 };
 
-export const loadUserReviews = (user, reviews) => {
-  return { type: LOAD_USER_REVIEWS, user: user, reviews: reviews };
+export const loadUserReviews = (userId, reviews) => {
+  return { type: LOAD_USER_REVIEWS, userId: userId, reviews: reviews };
 };
 
 export const addReview = (spot, review) => {

@@ -15,6 +15,8 @@ const reviewReducer = (state = initialState, action) => {
     case LOAD_SPOT_REVIEWS:
       console.log("REVIEWS ", action);
       return { ...state, ...action.reviews };
+    case LOAD_USER_REVIEWS:
+      return { ...state, [action.userId]: { ...action.reviews } };
     default:
       return state;
   }

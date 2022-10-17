@@ -7,3 +7,8 @@
   margin: 1rem;
   width: 35%;
 }
+
+.review-title {
+  display: flex;
+  justify-content: space-between;
+}

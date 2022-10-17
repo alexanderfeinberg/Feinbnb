@@ -9,11 +9,11 @@ import { useEffect } from "react";
 import "./AllSpots.css";
 
 const AllSpots = ({ isCurrent }) => {
-  console.log("ALL SPOTS");
   let dispatch = useDispatch();
   let history = useHistory();
 
   const [isLoaded, setIsLoaded] = useState(false);
+  console.log("IS LOADED", isLoaded);
 
   const spots = useSelector((state) =>
     isCurrent ? state.spots["userSpots"] : state.spots
@@ -37,7 +37,7 @@ const AllSpots = ({ isCurrent }) => {
     history.push(`/spots/${e}`);
   };
 
-  if (isLoaded) {
+  if (spots) {
     return (
       <>
         <h2>Spots</h2>
