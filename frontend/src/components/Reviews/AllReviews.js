@@ -1,7 +1,16 @@
+import { useContext } from "react";
 import ReviewCard from "../Reviews/ReviewCard";
+import CreateSpotFormModal from "./CreateReviewFormModal";
+import { MenuContext } from "../../context/MenuModal";
 
 const AllReviews = ({ props: { reviews, spot, numberOfReviews } }) => {
-  const handleReview = () => {};
+  const { showModal, setShowModal, defaultValue, setDefaultValue } =
+    useContext(MenuContext);
+
+  const handleReview = () => {
+    setDefaultValue(false);
+    setShowModal("createReview");
+  };
   console.log("ALL REVIEWS ", reviews);
 
   return (
@@ -11,6 +20,7 @@ const AllReviews = ({ props: { reviews, spot, numberOfReviews } }) => {
           <i className="fa fa-star" aria-hidden="true"></i>
           {spot ? spot.avgRating : null} ·
         </div>
+        <CreateSpotFormModal spot={spot} />
         <div className="rating-count">{numberOfReviews} reviews</div>
         <div className="add-comment">
           <button onClick={handleReview}>Leave a review</button>

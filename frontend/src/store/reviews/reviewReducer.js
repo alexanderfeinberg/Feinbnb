@@ -33,7 +33,11 @@ const reviewReducer = (state = initialState, action) => {
       const newState = Object.assign({}, state);
       delete newState[action.reviewId];
       return newState;
-
+    case ADD_REVIEW:
+      console.log(" ADD REVIEW STATE ", state);
+      const addState = Object.assign({}, state);
+      addState[action.spotId][action.review.id] = action.review;
+      return addState;
     default:
       return state;
   }

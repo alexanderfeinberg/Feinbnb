@@ -12,8 +12,8 @@ export const loadUserReviews = (userId, reviews) => {
   return { type: LOAD_USER_REVIEWS, userId: userId, reviews: reviews };
 };
 
-export const addReview = (spot, review) => {
-  return { type: ADD_REVIEW, spot: spot, review: review };
+export const addReview = (spotId, review) => {
+  return { type: ADD_REVIEW, spotId: spotId, review: review };
 };
 
 export const deleteReview = (reviewId) => {

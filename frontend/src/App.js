@@ -8,7 +8,6 @@ import { MenuProvider } from "./context/MenuModal";
 import AllSpots from "./components/Spots/AllSpots";
 import SingleSpot from "./components/Spots/SingleSpot";
 import UserReviewWrapper from "./components/Reviews/UserReviewWrapper";
-
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);

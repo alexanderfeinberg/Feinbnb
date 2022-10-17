@@ -43,7 +43,7 @@ function CreateSpotForm() {
           history.push(`/spots/${resSpot.id}`);
         })
         .catch(async (res) => {
-          const data = await data.json();
+          const data = await res.json();
           if (data) setErrors([data.message]);
         });
     else if (spot) {
@@ -56,7 +56,7 @@ function CreateSpotForm() {
           history.push(`/spots/${resSpot.id}`);
         })
         .catch(async (res) => {
-          const data = await data.json();
+          const data = await res.json();
           if (data) setErrors([data.message]);
         });
     }

@@ -9,8 +9,10 @@ import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
 import AllReviews from "../Reviews/AllReviews";
 
 const SingleSpot = () => {
+  console.log("SINGLE SPOT RENDER");
   const { showModal, setShowModal, defaultValue, setDefaultValue } =
     useContext(MenuContext);
+
   const { spotId } = useParams();
 
   let dispatch = useDispatch();
@@ -25,7 +27,7 @@ const SingleSpot = () => {
     console.log("REIVEW STATEEE ", state);
     return state.reviews[spotId] ? state.reviews[spotId] : null;
   });
-  console.log("REVIEWS", reviews);
+  console.log("REVIEWS ", reviews);
 
   // console.log("USER ID ", user.id, spot.ownerId);
 
@@ -40,7 +42,8 @@ const SingleSpot = () => {
   };
 
   useEffect(() => {
-    console.log("USE EFFECT");
+    console.log("SINGLE SPOT USE EFFECT");
+
     dispatch(getSpotThunk(spotId)).then((res) => {});
     dispatch(getSpotReviewsThunk(spotId)).then((res) => {
       setNumberOfReviews(res["Reviews"].length);
@@ -50,7 +53,7 @@ const SingleSpot = () => {
     return () => setIsLoaded(false);
   }, [dispatch]);
 
-  if (spot && reviews) {
+  if (spot && reviews && isLoaded) {
     return (
       <div className="spot-details">
         <div className="top-details">

@@ -44,6 +44,11 @@ function ProfileButton({ user }) {
             </Link>
           </li>
           <li>
+            <Link to="/reviews/current/" className="btn btn-primary">
+              My reviews
+            </Link>
+          </li>
+          <li>
             <button onClick={logout}>Log Out</button>
           </li>
         </ul>

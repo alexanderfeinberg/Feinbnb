@@ -35,3 +35,15 @@ export const deleteReviewThunk = (reviewId) => async (dispatch) => {
     return message;
   }
 };
+
+export const addReviewThunk = (spotId, review) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+    method: "POST",
+    body: JSON.stringify(review),
+  });
+  if (response.ok) {
+    const message = await response.json();
+    dispatch(addReview(spotId, message));
+    return message;
+  }
+};

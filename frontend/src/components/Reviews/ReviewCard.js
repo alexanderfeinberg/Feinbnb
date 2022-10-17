@@ -44,11 +44,15 @@ const ReviewCard = ({ review }) => {
     <div className="review-card">
       <div className="top-half">
         <div className="review-title">
-          <div className="review-name">{review["User"]["firstName"]}</div>
+          <div className="review-name">
+            {review["User"] ? review["User"]["firstName"] : user.firstName}
+          </div>
           <div className="review-delete">
-            <button onClick={handleDelete} data-remove={review.id}>
-              Delete
-            </button>
+            {(!review.User || user.id === review.User.id) && (
+              <button onClick={handleDelete} data-remove={review.id}>
+                Delete
+              </button>
+            )}
           </div>
         </div>
         <div className="review-date">
