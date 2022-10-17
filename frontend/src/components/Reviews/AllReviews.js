@@ -2,6 +2,7 @@ import ReviewCard from "../Reviews/ReviewCard";
 
 const AllReviews = ({ props: { reviews, spot, numberOfReviews } }) => {
   const handleReview = () => {};
+  console.log("ALL REVIEWS ", reviews);
 
   return (
     <>

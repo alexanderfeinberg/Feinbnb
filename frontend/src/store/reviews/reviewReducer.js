@@ -13,8 +13,14 @@ const initialState = {
 const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SPOT_REVIEWS:
-      console.log("REVIEWS ", action);
-      return { ...state, ...action.reviews };
+      const combineReviews = Object.assign({}, state);
+      combineReviews[action.spotId] = {};
+      action.reviews.forEach(
+        (review) => (combineReviews[action.spotId][review.id] = review)
+      );
+      console.log("COMBINE REVIEWS ", combineReviews);
+      return combineReviews;
+
     case LOAD_USER_REVIEWS:
       console.log("LOAD USER STATE ", state);
       const reviews = {};

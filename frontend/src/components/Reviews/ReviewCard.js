@@ -26,6 +26,7 @@ const formatDate = (date) => {
 };
 
 const ReviewCard = ({ review }) => {
+  console.log("REVIEW CARD ", review);
   const user = useSelector((state) => state.session.user);
   let dispatch = useDispatch();
   let history = useHistory();

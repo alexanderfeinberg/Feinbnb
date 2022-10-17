@@ -21,8 +21,11 @@ const SingleSpot = () => {
   const [numberOfReviews, setNumberOfReviews] = useState(0);
   const spot = useSelector((state) => state.spots[spotId]);
   const user = useSelector((state) => state.session.user);
-  const reviews = useSelector((state) => state.reviews);
-  console.log("SPOT", spot);
+  const reviews = useSelector((state) => {
+    console.log("REIVEW STATEEE ", state);
+    return state.reviews[spotId] ? state.reviews[spotId] : null;
+  });
+  console.log("REVIEWS", reviews);
 
   // console.log("USER ID ", user.id, spot.ownerId);
 
@@ -47,7 +50,7 @@ const SingleSpot = () => {
     return () => setIsLoaded(false);
   }, [dispatch]);
 
-  if (spot) {
+  if (spot && reviews) {
     return (
       <div className="spot-details">
         <div className="top-details">
@@ -86,7 +89,7 @@ const SingleSpot = () => {
       </div>
     );
   }
-  return null;
+  return <h2>Loading...</h2>;
 };
 
 export default SingleSpot;
