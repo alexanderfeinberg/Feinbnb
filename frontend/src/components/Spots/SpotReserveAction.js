@@ -13,8 +13,13 @@ const SpotReserveAction = ({ spot }) => {
         </div>
         <div className="review-count">{numReviews}</div>
       </div>
-      <div className="check-in-check-out"></div>
-      <div className="guest-number"></div>
+      <div className="booking-data">
+        <button className="booking-dates">
+          <div className="check-in-title">Check In</div>
+          <div className="check-in-date">Add a date</div>
+        </button>
+        <div className="guest-number"></div>
+      </div>
       <div className="reserve-btn">
         <button>Reserve</button>
       </div>
