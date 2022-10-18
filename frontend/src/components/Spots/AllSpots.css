@@ -6,7 +6,7 @@
 }
 
 .spot-image {
-  border: 0.1rem solid black;
+  border: 0.1rem solid none;
   border-radius: 0.5rem;
   height: 100%;
   width: 100%;
@@ -15,6 +15,7 @@
   height: 100%;
   width: 100%;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .bottom-details > * {
@@ -41,10 +42,10 @@
 .individual-spot:not(.top-line) {
   display: flex;
   flex-direction: column;
-  border: 0.1rem solid black;
+  border: 0.1rem solid none;
   border-radius: 0.5rem;
   padding: 2px;
   margin: 0.25rem;
-  width: 250px;
+  width: 270px;
   height: 290px;
 }

@@ -25,7 +25,9 @@ const AllReviews = ({ props: { reviews, spot, numberOfReviews } }) => {
           {spot ? starRating : null} ·
         </div>
         <CreateSpotFormModal spot={spot} />
-        <div className="rating-count">{numReviews} reviews</div>
+        <div className="rating-count">
+          {numReviews} {numReviews > 1 ? "reviews" : "review"}
+        </div>
         <div className="add-comment">
           <button onClick={handleReview}>Leave a review</button>
         </div>

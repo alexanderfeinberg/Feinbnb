@@ -91,6 +91,9 @@ const SingleSpot = () => {
             </div>
           </div>
         </div>
+        <div className="spot-image">
+          <img src="https://a0.muscache.com/im/pictures/miso/Hosting-46695796/original/9bd67185-dc83-4473-a191-9486c62aec66.jpeg?im_w=1440"></img>
+        </div>
         <div className="bottom-details">
           <div className="review-section">
             <AllReviews props={{ reviews, spot }} />

@@ -1,5 +1,9 @@
 /* TODO Add site wide styles */
-#root {
-  margin-right: 50px;
-  margin-left: 50px;
+body {
+  margin: 0px;
+}
+
+#root > *:not(.nav-bar) {
+  margin-right: 60px;
+  margin-left: 60px;
 }

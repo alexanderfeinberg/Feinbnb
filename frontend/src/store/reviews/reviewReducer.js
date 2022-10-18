@@ -22,12 +22,11 @@ const reviewReducer = (state = initialState, action) => {
       return combineReviews;
 
     case LOAD_USER_REVIEWS:
-      console.log("LOAD USER STATE ", state);
-      const reviews = {};
+      const reviews = { ...state.reviews };
       const userReviews = action.reviews["Reviews"];
       userReviews.forEach((review) => (reviews[review.id] = review));
-      console.log("REVIEWSSS ", reviews);
-      return { ...state, ...reviews };
+
+      return { ...reviews };
     case DELETE_REVIEW:
       console.log("STATE ", state);
       const newState = Object.assign({}, state);

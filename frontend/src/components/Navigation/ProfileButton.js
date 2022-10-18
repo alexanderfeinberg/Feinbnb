@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import { MenuContext } from "../../context/MenuModal";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const { showModal, setShowModal, defaultValue, setDefaultValue } =
+    useContext(MenuContext);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -35,23 +38,37 @@ function ProfileButton({ user }) {
         <i className="fas fa-user-circle" />
       </button>
       {showMenu && (
-        <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
-            <Link to="/spots/current/" className="btn btn-primary">
-              My spots
-            </Link>
-          </li>
-          <li>
-            <Link to="/reviews/current/" className="btn btn-primary">
-              My reviews
-            </Link>
-          </li>
-          <li>
-            <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+        <div className="profile-dropdown">
+          <div>{user.username}</div>
+          <div>{user.email}</div>
+          <div className="profile-action-btns">
+            <div>
+              <Link to="/spots/current/" className="btn btn-primary">
+                My spots
+              </Link>
+            </div>
+            <div>
+              <Link to="/reviews/current/" className="btn btn-primary">
+                My reviews
+              </Link>
+            </div>
+          </div>
+          <div classNAme="profile-secondary-btns">
+            <div>
+              <Link
+                onClick={() => {
+                  setDefaultValue(false);
+                  setShowModal("createSpot");
+                }}
+              >
+                Create Spot
+              </Link>
+            </div>
+            <div>
+              <Link onClick={logout}>Log Out</Link>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

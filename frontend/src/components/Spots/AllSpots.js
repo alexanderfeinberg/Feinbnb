@@ -40,7 +40,7 @@ const AllSpots = ({ isCurrent }) => {
   if (spots) {
     return (
       <>
-        <h2>Spots</h2>
+        <h2>Trips</h2>
         <div className="all-spots">
           {Object.values(spots).map((spot) => {
             return (

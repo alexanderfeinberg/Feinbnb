@@ -1,4 +1,45 @@
 .nav-bar {
+  margin-top: 25px;
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid lightgrey;
+  margin-right: 0px;
+}
+
+.action-btn {
+  position: relative;
+  margin-right: 60px;
+}
+
+.home-link {
+  margin-left: 60px;
+}
+
+.profile-dropdown {
+  position: absolute;
+  right: 1px;
+  background: white;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.profile-dropdown > * {
+  margin: 5px;
+}
+
+.profile-dropdown div div:hover {
+  background-color: darkgray;
+}
+
+.profile-dropdown > div {
+  color: grey;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-action-btns {
+  border-bottom: 1px solid lightgrey;
 }
