@@ -5,7 +5,7 @@ const { query } = require("express");
 const images = [
   {
     spotId: 1,
-    url: "url1.com",
+    url: "https://a0.muscache.com/im/pictures/miso/Hosting-46695796/original/a0965aa5-3907-466e-b727-0900e2a7e8c7.jpeg?im_w=1200",
     preview: true,
   },
   {
