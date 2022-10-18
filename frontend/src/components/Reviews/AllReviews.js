@@ -4,7 +4,7 @@ import CreateSpotFormModal from "./CreateReviewFormModal";
 import { MenuContext } from "../../context/MenuModal";
 import { useReviewContext } from "../../context/reviewCountStarContext";
 
-const AllReviews = ({ props: { reviews, spot, numberOfReviews } }) => {
+const AllReviews = ({ props: { user, reviews, spot, numberOfReviews } }) => {
   const { showModal, setShowModal, defaultValue, setDefaultValue } =
     useContext(MenuContext);
 
@@ -29,7 +29,7 @@ const AllReviews = ({ props: { reviews, spot, numberOfReviews } }) => {
           {numReviews} {numReviews > 1 ? "reviews" : "review"}
         </div>
         <div className="add-comment">
-          <button onClick={handleReview}>Leave a review</button>
+          {user && <button onClick={handleReview}>Leave a review</button>}
         </div>
       </div>
       <div className="review-content">

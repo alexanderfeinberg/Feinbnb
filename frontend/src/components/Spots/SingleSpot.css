@@ -1,6 +1,11 @@
 .spot-details {
   margin: 15px;
 }
+
+.single-spot-image > img {
+  width: 80%;
+  height: 700px;
+}
 .top-line-single {
   display: flex;
   flex-direction: column;

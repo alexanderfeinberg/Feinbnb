@@ -48,7 +48,7 @@ const ReviewCard = ({ review }) => {
             {review["User"] ? review["User"]["firstName"] : user.firstName}
           </div>
           <div className="review-delete">
-            {(!review.User || user.id === review.User.id) && (
+            {user && (!review.User || user.id === review.User.id) && (
               <button onClick={handleDelete} data-remove={review.id}>
                 Delete
               </button>
