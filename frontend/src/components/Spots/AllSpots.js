@@ -60,7 +60,7 @@ const AllSpots = ({ isCurrent }) => {
                     </div>
                     <div className="rating">
                       <i className="fa fa-star" aria-hidden="true"></i>
-                      {spot.avgRating}
+                      {spot.avgRating ? spot.avgRating : 0}
                     </div>
                   </div>
                   <div className="address">{spot.address}</div>

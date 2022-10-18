@@ -1,7 +1,11 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addSpotThunk, updateSpotThunk } from "../../store/spots/spotThunks";
+import {
+  addSpotThunk,
+  updateSpotThunk,
+  addImageThunk,
+} from "../../store/spots/spotThunks";
 import { MenuContext } from "../../context/MenuModal";
 import "./CreateSpotForm.css";
 
@@ -22,6 +26,7 @@ function CreateSpotForm() {
   const [description, setDescription] = useState(spot ? spot.description : "");
   const [price, setPrice] = useState(spot ? spot.price : 0);
   const [errors, setErrors] = useState([]);
+  const [previewImage, setPreviewImage] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,6 +44,10 @@ function CreateSpotForm() {
     };
     if (!spot)
       return dispatch(addSpotThunk(newSpot))
+        .then((resSpot) => {
+          addImageThunk(previewImage, resSpot.id);
+          return resSpot;
+        })
         .then((resSpot) => {
           setShowModal(false);
           history.push(`/spots/${resSpot.id}`);
@@ -140,6 +149,13 @@ function CreateSpotForm() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Spot Description"
+          required
+        />
+        <input
+          type="text"
+          value={previewImage}
+          onChange={(e) => setPreviewImage(e.target.value)}
+          placeholder="Spot Preview Image URL"
           required
         />
         <label>Price:</label>

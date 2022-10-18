@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid lightgrey;
+  /* border-bottom: 1px solid lightgrey; */
   margin-right: 0px;
 }
 
@@ -46,4 +46,17 @@ a {
 }
 .user-info {
   border-bottom: 1px solid lightgrey;
+}
+.profile-button-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.profile-button-btn > button {
+  border-radius: 20px;
+  border: 2px solid lightgray;
+  width: 4.5rem;
+  height: 2.5rem;
 }

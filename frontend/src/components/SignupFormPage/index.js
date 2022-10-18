@@ -13,6 +13,7 @@ function SignupFormPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [errors, setErrors] = useState([]);
   const { showModal, setShowModal } = useContext(MenuContext);
 

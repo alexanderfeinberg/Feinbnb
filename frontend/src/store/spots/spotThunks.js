@@ -73,3 +73,12 @@ export const deleteSpotThunk = (spot) => async (dispatch) => {
     return message;
   }
 };
+
+export const addImageThunk = async (imgUrl, spotId) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    body: JSON.stringify({ url: imgUrl, preview: true }),
+  });
+  const data = await response.json();
+  return;
+};

@@ -8,6 +8,7 @@ import { MenuContext } from "../../context/MenuModal";
 import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
 import AllReviews from "../Reviews/AllReviews";
 import { useReviewContext } from "../../context/reviewCountStarContext";
+import SingleSpotInfo from "./SingleSpotInfo";
 
 const SingleSpot = () => {
   console.log("SINGLE SPOT RENDER");
@@ -114,6 +115,8 @@ const SingleSpot = () => {
           </div>
         </div>
         <div className="bottom-details">
+          <SingleSpotInfo spot={spot} />
+
           <div className="review-section">
             <AllReviews props={{ user, reviews, spot }} />
           </div>

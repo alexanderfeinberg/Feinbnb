@@ -1,0 +1,25 @@
+.spot-feature-list {
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 20px;
+}
+
+.spot-feature {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.icon {
+  width: 6%;
+}
+.spot-feature-info {
+  margin-left: 12px;
+}
+
+.spot-feature-title {
+  font-weight: 600;
+}
+
+.spot-feature-content {
+  color: darkgray;
+}

@@ -74,6 +74,7 @@
 
 .bottom-details {
   display: flex;
+  flex-direction: column;
 }
 
 .top-subtitle div:not(.subtitle-sep) {
@@ -83,6 +84,10 @@
 .subtitle-sep {
   margin-left: 3px;
   margin-right: 3px;
+}
+
+.bottom-spot-info-left {
+  width: 60%;
 }
 
 button {

@@ -1,0 +1,11 @@
+.top-container-info {
+  display: flex;
+}
+
+.bottom-spot-info-right {
+  width: 40%;
+}
+
+.reserve-btn {
+  justify-self: right;
+}
