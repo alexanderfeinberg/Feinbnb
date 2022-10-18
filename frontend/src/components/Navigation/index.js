@@ -25,7 +25,12 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <>
         <button onClick={() => setShowModal("login")}>
-          <i className="fas fa-user-circle" />
+          {/* <i className="fas fa-user-circle" /> */}
+          Login
+        </button>
+        <button onClick={() => setShowModal("login")}>
+          {/* <i className="fas fa-user-circle" /> */}
+          Signup
         </button>
         <LoginFormModal />
       </>

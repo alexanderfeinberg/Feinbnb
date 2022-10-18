@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addSpotThunk, updateSpotThunk } from "../../store/spots/spotThunks";
 import { MenuContext } from "../../context/MenuModal";
+import "./CreateSpotForm.css";
 
 function CreateSpotForm() {
   let dispatch = useDispatch();
@@ -63,97 +64,94 @@ function CreateSpotForm() {
   };
   return (
     <>
+      <h3>Host your spot</h3>
       <form onSubmit={handleSubmit}>
-        <ul>
-          {errors.map((err, idx) => {
-            return <li key={idx}>{err}</li>;
-          })}
-        </ul>
-        <label>
-          Street address
-          <input
-            type="text"
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          City
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          State
-          <input
-            type="text"
-            value={state}
-            onChange={(e) => setState(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Country
-          <input
-            type="text"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Latitude
-          <input
-            type="number"
-            value={lat}
-            onChange={(e) => setLat(e.target.value)}
-            min="1"
-            required
-          />
-        </label>
-        <label>
-          Longitude
-          <input
-            type="number"
-            value={long}
-            onChange={(e) => setLong(e.target.value)}
-            min="1"
-            required
-          />
-        </label>
+        {errors.length > 0 && (
+          <ul>
+            {errors.map((err, idx) => {
+              return <li key={idx}>{err}</li>;
+            })}
+          </ul>
+        )}
 
-        <label>
-          Spot Name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Spot Description
-          <input
-            type="text"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Price
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            min="1"
-            required
-          />
-        </label>
+        <input
+          type="text"
+          name="adress"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          placeholder="Address"
+          required
+        />
+
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="City"
+          required
+        />
+
+        <input
+          type="text"
+          value={state}
+          onChange={(e) => setState(e.target.value)}
+          placeholder="State"
+          required
+        />
+
+        <input
+          type="text"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+          placeholder="Country"
+          required
+        />
+
+        <label for="lat">Latitude:</label>
+        <input
+          type="number"
+          name="lat"
+          value={lat}
+          onChange={(e) => setLat(e.target.value)}
+          min="1"
+          required
+        />
+
+        <label>Longitude:</label>
+        <input
+          type="number"
+          value={long}
+          onChange={(e) => setLong(e.target.value)}
+          placeholder="Longitude"
+          min="1"
+          required
+        />
+
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Spot Name"
+          required
+        />
+
+        <input
+          type="text"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          placeholder="Spot Description"
+          required
+        />
+        <label>Price:</label>
+        <input
+          type="number"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="Price"
+          min="1"
+          required
+        />
+
         <button type="submit">{spot ? `Update Spot` : `Create Spot`}</button>
       </form>
     </>

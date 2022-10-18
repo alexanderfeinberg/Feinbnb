@@ -36,7 +36,7 @@ const spotAddAvgPreview = async (spots, setPreview = true) => {
       },
     });
 
-    spot.dataValues.avgRating = count / total;
+    spot.dataValues.avgRating = Math.round((count / total) * 100) / 100;
     if (setPreview) {
       spot.dataValues.previewImage = await setPreviewImage(spot);
     }

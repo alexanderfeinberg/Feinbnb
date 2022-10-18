@@ -35,31 +35,33 @@ const CreateSpotForm = ({ spot }) => {
   };
   return (
     <form onSubmit={handleSubmit}>
-      <ul>
-        {errors.map((err, idx) => {
-          return <li key={idx}>{err}</li>;
-        })}
-      </ul>
-      <label>
-        Review:
-        <input
-          type="text"
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-          required
-        />
-      </label>
-      <label>
-        Rating
-        <input
-          type="number"
-          min="0"
-          max="5"
-          value={stars}
-          onChange={(e) => setStars(e.target.value)}
-          required
-        />
-      </label>
+      <h3>Leave a review</h3>
+      {errors.length > 0 && (
+        <ul>
+          {errors.map((err, idx) => {
+            return <li key={idx}>{err}</li>;
+          })}
+        </ul>
+      )}
+
+      <input
+        type="text"
+        value={review}
+        onChange={(e) => setReview(e.target.value)}
+        placeholder="Leave your review here"
+        required
+      />
+
+      <label>Rating:</label>
+      <input
+        type="number"
+        min="0"
+        max="5"
+        value={stars}
+        onChange={(e) => setStars(e.target.value)}
+        required
+      />
+
       <button type="submit">Submit Review</button>
     </form>
   );

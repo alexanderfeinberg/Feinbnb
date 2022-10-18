@@ -1,30 +1,101 @@
+#root {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
 .spot-details {
   margin: 15px;
 }
-
-.single-spot-image > img {
-  width: 80%;
-  height: 700px;
+.single-spot-image {
+  display: flex;
+  gap: 5px;
+  vertical-align: center;
+  /* border: 1px solid black; */
+  border-radius: 20px;
+  overflow: hidden;
 }
+
+.single-spot-image div {
+  gap: 5px;
+  cursor: pointer;
+}
+
+.supporting-images {
+  display: flex;
+  flex-flow: wrap;
+  width: 50%;
+  height: 400px;
+  box-sizing: border-box;
+}
+
+.supporting-images > img {
+  object-fit: cover;
+  width: 49%;
+  height: 49.5%;
+  /* margin-left: 2%; */
+  image-rendering: pixelated;
+  margin-bottom: 0px;
+  /* box-sizing: border-box; */
+  /* margin-right: 3%; */
+}
+
+.main-image > img {
+  width: 100%;
+  height: 400px;
+}
+
+.main-image {
+  width: 50%;
+}
+
 .top-line-single {
   display: flex;
   flex-direction: column;
+  margin-bottom: 1.5rem;
 }
 
 .top-subtitle {
-  display: flex;
-  justify-content: space-between;
+  display: inline-flex;
+  white-space: nowrap;
+  /* justify-content: space-between; */
+}
+.top-subtitle > * {
+  margin-top: 5px;
+
+  margin-right: 5px;
 }
 
 .top-title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-.top-title > button {
-  height: 100%;
+  height: 3rem;
 }
 
-.review-header {
+.bottom-details {
   display: flex;
+}
+
+.top-subtitle div:not(.subtitle-sep) {
+  margin-right: 2px;
+}
+
+.subtitle-sep {
+  margin-left: 3px;
+  margin-right: 3px;
+}
+
+button {
+  border-radius: 7px;
+  background-color: white;
+  border: 1px solid lightgray;
+  height: 2rem;
+  cursor: pointer;
+  color: black;
+  font-weight: 500;
+}
+
+button:hover {
+  background-color: #ff385c;
+  color: white;
 }

@@ -39,8 +39,10 @@ function ProfileButton({ user }) {
       </button>
       {showMenu && (
         <div className="profile-dropdown">
-          <div>{user.username}</div>
-          <div>{user.email}</div>
+          <div className="user-info">
+            <div>{user.username}</div>
+            <div>{user.email}</div>
+          </div>
           <div className="profile-action-btns">
             <div>
               <Link to="/spots/current/" className="btn btn-primary">

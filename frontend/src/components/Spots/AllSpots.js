@@ -49,11 +49,11 @@ const AllSpots = ({ isCurrent }) => {
                   <img
                     value={spot.id}
                     onClick={(e) => handleClick(e.target.getAttribute("value"))}
-                    src="https://a0.muscache.com/im/pictures/miso/Hosting-46695796/original/9bd67185-dc83-4473-a191-9486c62aec66.jpeg?im_w=1440"
+                    src={spot.previewImage}
                   />
                 </div>
 
-                <div className="bottom-details" key={`details-${spot.id}`}>
+                <div className="all-bottom-details" key={`details-${spot.id}`}>
                   <div className="top-line">
                     <div className="location">
                       {spot.city}, {spot.state}

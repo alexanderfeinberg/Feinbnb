@@ -1,0 +1,14 @@
+.review-section {
+  width: 50%;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-header-review-data {
+  display: flex;
+  align-items: center;
+}

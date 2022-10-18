@@ -1,6 +1,7 @@
 .nav-bar {
   margin-top: 25px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid lightgrey;
   margin-right: 0px;
@@ -27,7 +28,7 @@
   margin: 5px;
 }
 
-.profile-dropdown div div:hover {
+.profile-dropdown div div a:hover {
   background-color: darkgray;
 }
 
@@ -41,5 +42,8 @@ a {
 }
 
 .profile-action-btns {
+  border-bottom: 1px solid lightgrey;
+}
+.user-info {
   border-bottom: 1px solid lightgrey;
 }

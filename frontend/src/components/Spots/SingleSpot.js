@@ -27,7 +27,9 @@ const SingleSpot = () => {
   const spot = useSelector((state) => {
     console.log("SELECTING SPOT....", state);
     setStarRating(state.spots[spotId] ? state.spots[spotId].avgRating : null);
-    return state.spots[spotId];
+    return state.spots[spotId] && state.spots[spotId].Owner
+      ? state.spots[spotId]
+      : null;
   });
   const user = useSelector((state) => state.session.user);
   const reviews = useSelector((state) => {
@@ -83,8 +85,11 @@ const SingleSpot = () => {
                 <i className="fa fa-star" aria-hidden="true"></i>
                 {starRating}
               </div>
+              <div className="subtitle-sep">·</div>
               <div className="ratingsCount">{numReviews} reviews</div>
-              <div className="host">Host: {spot.ownerId}</div>
+              <div className="subtitle-sep">·</div>
+              <div className="host">Host: {spot.Owner.firstName}</div>
+              <div className="subtitle-sep">·</div>
               <div className="location">
                 {spot.city}, {spot.state}, {spot.country}
               </div>
@@ -92,7 +97,21 @@ const SingleSpot = () => {
           </div>
         </div>
         <div className="single-spot-image">
-          <img src="https://a0.muscache.com/im/pictures/miso/Hosting-46695796/original/9bd67185-dc83-4473-a191-9486c62aec66.jpeg?im_w=1440"></img>
+          <div className="main-image">
+            <img
+              src={
+                spot.SpotImages.filter((image) => image.preview === true)[0].url
+              }
+            ></img>
+          </div>
+          <div className="supporting-images">
+            {spot.SpotImages.length > 1 &&
+              spot.SpotImages.map((img, idx) => {
+                console.log("SPOT IMAGES", spot.SpotImages, idx);
+                if (idx === 0 || idx > 5) return null;
+                return <img key={`img-${idx}`} src={img.url}></img>;
+              })}
+          </div>
         </div>
         <div className="bottom-details">
           <div className="review-section">

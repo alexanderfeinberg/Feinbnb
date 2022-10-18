@@ -18,11 +18,11 @@
   cursor: pointer;
 }
 
-.bottom-details > * {
+.all-bottom-details > * {
   margin-top: 6px;
   margin-bottom: 6px;
 }
-.bottom-details {
+.all-bottom-details {
   padding: 0.35rem;
 }
 
