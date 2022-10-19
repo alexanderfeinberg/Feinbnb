@@ -1,4 +1,5 @@
 import "./ReviewCard.css";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteReviewThunk } from "../../store/reviews/reviewThunk";
 import { useHistory } from "react-router-dom";
@@ -25,9 +26,10 @@ const formatDate = (date) => {
   return { year, month };
 };
 
-const ReviewCard = ({ review }) => {
-  console.log("REVIEW CARD ", review);
-  const user = useSelector((state) => state.session.user);
+const ReviewCard = ({ review, user }) => {
+  console.log("REVIEW CARD ", user);
+
+  console.log("REVIEWS", review);
   let dispatch = useDispatch();
   let history = useHistory();
 

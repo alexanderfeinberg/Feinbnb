@@ -25,14 +25,18 @@ const SingleSpot = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
   console.log("IS LOADED ", isLoaded);
-  const spot = useSelector((state) => {
+  let spot = useSelector((state) => {
     console.log("SELECTING SPOT....", state);
     setStarRating(state.spots[spotId] ? state.spots[spotId].avgRating : null);
     return state.spots[spotId] && state.spots[spotId].Owner
       ? state.spots[spotId]
       : null;
   });
-  const user = useSelector((state) => state.session.user);
+  let user = useSelector((state) => {
+    console.log("SEARCHING FOR USER");
+    return state.session.user ? state.session.user : null;
+  });
+  console.log("USER ", user);
   const reviews = useSelector((state) => {
     console.log("SELECTING REVIEWS....");
     setNumReviews(
@@ -57,14 +61,22 @@ const SingleSpot = () => {
   useEffect(() => {
     console.log("SINGLE SPOT USE EFFECT");
 
-    dispatch(getSpotThunk(spotId)).then((res) => {});
+    dispatch(getSpotThunk(spotId)).then((res) => res);
     dispatch(getSpotReviewsThunk(spotId)).then((res) => {
       setIsLoaded(true);
     });
 
     return () => setIsLoaded(false);
-  }, [dispatch]);
+  }, [dispatch, spotId]);
 
+  useEffect(() => {
+    console.log("USER CHANGE");
+    dispatch(getSpotReviewsThunk(spotId)).then((res) => {
+      setIsLoaded(true);
+    });
+  }, [user]);
+
+  console.log("SPOT ", spot, "REVIEWS ", reviews, "ISLOADED ", isLoaded);
   if (spot && reviews && isLoaded) {
     return (
       <div className="spot-details">

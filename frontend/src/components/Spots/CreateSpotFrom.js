@@ -1,6 +1,8 @@
 import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { getSpotReviewsThunk } from "../../store/reviews/reviewThunk";
+
 import {
   addSpotThunk,
   updateSpotThunk,
@@ -46,6 +48,10 @@ function CreateSpotForm() {
       return dispatch(addSpotThunk(newSpot))
         .then((resSpot) => {
           addImageThunk(previewImage, resSpot.id);
+          return resSpot;
+        })
+        .then((resSpot) => {
+          dispatch(getSpotReviewsThunk(resSpot.id));
           return resSpot;
         })
         .then((resSpot) => {
@@ -116,7 +122,7 @@ function CreateSpotForm() {
           required
         />
 
-        <label for="lat">Latitude:</label>
+        <label htmlFor="lat">Latitude:</label>
         <input
           type="number"
           name="lat"

@@ -39,7 +39,7 @@ const AllReviews = ({ props: { user, reviews, spot, numberOfReviews } }) => {
       </div>
       <div className="review-content">
         {Object.values(reviews).map((review) => (
-          <ReviewCard key={review.id} review={review} />
+          <ReviewCard key={review.id} review={review} user={user} />
         ))}
       </div>
     </>
