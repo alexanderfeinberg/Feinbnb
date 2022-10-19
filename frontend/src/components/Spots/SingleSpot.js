@@ -99,7 +99,9 @@ const SingleSpot = () => {
                 {starRating}
               </div>
               <div className="subtitle-sep">·</div>
-              <div className="ratingsCount">{numReviews} reviews</div>
+              <div className="ratingsCount">
+                <a href="#all-reviews">{numReviews} reviews</a>
+              </div>
               <div className="subtitle-sep">·</div>
               <div className="host">Host: {spot.Owner.firstName}</div>
               <div className="subtitle-sep">·</div>

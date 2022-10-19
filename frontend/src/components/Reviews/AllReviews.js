@@ -21,7 +21,7 @@ const AllReviews = ({ props: { user, reviews, spot, numberOfReviews } }) => {
 
   return (
     <>
-      <div className="review-header">
+      <div id="all-reviews" className="review-header">
         <div className="review-header-review-data">
           <div className="star-rating">
             <i className="fa fa-star" aria-hidden="true"></i>

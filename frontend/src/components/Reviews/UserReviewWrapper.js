@@ -25,7 +25,7 @@ const UserReviewWrapper = () => {
   }, [dispatch]);
 
   if (isLoaded) {
-    return <AllReviews props={{ reviews }} />;
+    return <AllReviews props={{ reviews, user }} />;
   }
   return null;
 };

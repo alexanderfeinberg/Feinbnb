@@ -50,6 +50,7 @@
 .review-count {
   /* font-size: 14px; */
   color: gray;
+  text-decoration: underline;
 }
 
 /* .reserve-btn button {

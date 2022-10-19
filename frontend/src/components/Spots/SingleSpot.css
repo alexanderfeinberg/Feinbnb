@@ -104,3 +104,8 @@ button:hover:not(.reserve-btn button) {
   background-color: #ff385c;
   color: white;
 }
+
+.ratingsCount a {
+  color: gray;
+  text-decoration: underline;
+}
