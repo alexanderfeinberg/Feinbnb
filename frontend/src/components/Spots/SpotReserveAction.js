@@ -1,27 +1,32 @@
 import { useReviewContext } from "../../context/reviewCountStarContext";
 import "./SpotReserveAction.css";
+import SpotBookingForm from "./SpotBookingForm";
 const SpotReserveAction = ({ spot }) => {
   const { numReviews, setNumReviews, starRating, setStarRating } =
     useReviewContext();
   return (
     <div class="reserve-container">
       <div className="top-container-info">
-        <div className="price">${spot.price} night</div>
-        <div className="review-rating">
-          <i className="fa fa-star" aria-hidden="true"></i>
-          {starRating}
+        <div className="reserve-card-price">
+          ${spot.price} <div className="support-text">night</div>
         </div>
-        <div className="review-count">{numReviews}</div>
+
+        <div className="review-details">
+          <div className="review-rating">
+            <i className="fa fa-star" aria-hidden="true"></i>
+            {starRating}
+          </div>
+          <div className="subtitle-sep">·</div>
+          <div className="review-count">
+            {numReviews} {numReviews > 1 ? "reviews" : "review"}
+          </div>
+        </div>
       </div>
       <div className="booking-data">
-        <button className="booking-dates">
-          <div className="check-in-title">Check In</div>
-          <div className="check-in-date">Add a date</div>
-        </button>
-        <div className="guest-number"></div>
+        <SpotBookingForm />
       </div>
       <div className="reserve-btn">
-        <button>Reserve</button>
+        <button disabled={true}>Reserve</button>
       </div>
       <div className="warning">You wont be charged yet</div>
       <div className="stay-cost-calc"></div>

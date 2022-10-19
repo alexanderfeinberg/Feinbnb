@@ -90,7 +90,7 @@
   width: 60%;
 }
 
-button {
+button:not(.reserve-btn button) {
   border-radius: 7px;
   background-color: white;
   border: 1px solid lightgray;
@@ -100,7 +100,7 @@ button {
   font-weight: 500;
 }
 
-button:hover {
+button:hover:not(.reserve-btn button) {
   background-color: #ff385c;
   color: white;
 }

@@ -1,11 +1,59 @@
+.reserve-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  border: 0.5px solid lightgrey;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 6px 16px;
+  padding: 20px;
+}
+
 .top-container-info {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 13px;
+}
+
+.review-details {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
 }
 
 .bottom-spot-info-right {
+  display: flex;
+  justify-content: flex-end;
+
+  align-items: center;
+  margin-left: 50px;
   width: 40%;
 }
 
 .reserve-btn {
-  justify-self: right;
+  display: flex;
+  justify-content: center;
 }
+
+.reserve-card-price {
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+.support-text {
+  font-weight: 100;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+.review-count {
+  /* font-size: 14px; */
+  color: gray;
+}
+
+/* .reserve-btn button {
+  background-color: darkgray;
+  font-weight: 500;
+
+} */
