@@ -3,7 +3,9 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import { MenuContext } from "../../context/MenuModal";
+import HostHome from "./HostHome";
 
+import "./ProfileButton.css";
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
@@ -32,6 +34,59 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
+  let dropdown;
+  if (user) {
+    dropdown = (
+      <>
+        <div className="user-info">
+          <div>{user.username}</div>
+          <div>{user.email}</div>
+        </div>
+        <div className="profile-action-btns">
+          <div>
+            <Link to="/spots/current/" className="btn btn-primary">
+              My spots
+            </Link>
+          </div>
+          <div>
+            <Link to="/reviews/current/" className="btn btn-primary">
+              My reviews
+            </Link>
+          </div>
+        </div>
+        <div className="profile-secondary-btns">
+          <HostHome user={user} message={"Host your home"} />
+          <div>
+            <Link onClick={logout}>Log Out</Link>
+          </div>
+        </div>
+      </>
+    );
+  } else {
+    dropdown = (
+      <>
+        <div className="profile-action-btns">
+          <div>
+            <a
+              onClick={() => {
+                console.log("CLICK");
+                setShowModal("login");
+              }}
+            >
+              Login
+            </a>
+          </div>
+          <div>
+            <a onClick={() => setShowModal("signup")}>Sign Up</a>
+          </div>
+        </div>
+        <div className="login-secondary-btns">
+          <HostHome user={user} message={"Host your home"} />
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="profile-button-btn">
@@ -46,41 +101,8 @@ function ProfileButton({ user }) {
           </div>
         </button>
       </div>
-      {showMenu && (
-        <div className="profile-dropdown">
-          <div className="user-info">
-            <div>{user.username}</div>
-            <div>{user.email}</div>
-          </div>
-          <div className="profile-action-btns">
-            <div>
-              <Link to="/spots/current/" className="btn btn-primary">
-                My spots
-              </Link>
-            </div>
-            <div>
-              <Link to="/reviews/current/" className="btn btn-primary">
-                My reviews
-              </Link>
-            </div>
-          </div>
-          <div classNAme="profile-secondary-btns">
-            <div>
-              <Link
-                onClick={() => {
-                  setDefaultValue(false);
-                  setShowModal("createSpot");
-                }}
-              >
-                Create Spot
-              </Link>
-            </div>
-            <div>
-              <Link onClick={logout}>Log Out</Link>
-            </div>
-          </div>
-        </div>
-      )}
+
+      {showMenu && <div className="profile-dropdown">{dropdown}</div>}
     </>
   );
 }

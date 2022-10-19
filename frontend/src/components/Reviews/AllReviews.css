@@ -5,7 +5,12 @@
 .review-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+}
+
+.review-header a {
+  color: gray;
+  text-decoration: underline;
 }
 
 .review-header-review-data {

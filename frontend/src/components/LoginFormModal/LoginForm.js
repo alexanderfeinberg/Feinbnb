@@ -38,7 +38,7 @@ function LoginForm() {
 
   return (
     <>
-      <h1>Login or sign up</h1>
+      <h1>Login</h1>
       <h3>Welcome to Feinbnb</h3>
       <form onSubmit={handleSubmit}>
         {errors.length > 0 && (
@@ -67,7 +67,6 @@ function LoginForm() {
 
         <button type="submit">Log In</button>
       </form>
-      <SignupFormPage />
     </>
   );
 }

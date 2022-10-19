@@ -1,9 +1,42 @@
 /* TODO Add site wide styles */
 body {
   margin: 0px;
+  font-family: "Nunito", "Roboto", "Helvetica Neue", sans-serif;
 }
 
 #root > *:not(.nav-bar) {
   margin-right: 60px;
   margin-left: 60px;
+}
+
+a {
+  cursor: pointer;
+}
+
+button {
+  border-radius: 10px;
+  background-color: #ff385c;
+  border: 1px solid lightgray;
+  color: white;
+  height: 3rem;
+
+  cursor: pointer;
+
+  font-weight: 500;
+}
+
+button:hover {
+  background-color: #fa274e;
+}
+
+button:disabled,
+button[disabled] {
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+  cursor: default;
+}
+
+i {
+  color: black;
 }

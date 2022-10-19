@@ -74,6 +74,8 @@ const SingleSpot = () => {
     dispatch(getSpotReviewsThunk(spotId)).then((res) => {
       setIsLoaded(true);
     });
+
+    return () => setIsLoaded(false);
   }, [user]);
 
   console.log("SPOT ", spot, "REVIEWS ", reviews, "ISLOADED ", isLoaded);

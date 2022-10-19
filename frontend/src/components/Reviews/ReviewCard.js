@@ -1,8 +1,9 @@
 import "./ReviewCard.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteReviewThunk } from "../../store/reviews/reviewThunk";
 import { useHistory } from "react-router-dom";
+
 const months = {
   "01": "January",
   "02": "Febuary",
@@ -27,9 +28,7 @@ const formatDate = (date) => {
 };
 
 const ReviewCard = ({ review, user }) => {
-  console.log("REVIEW CARD ", user);
-
-  console.log("REVIEWS", review);
+  console.log("REVIEW CARD RERENDER");
   let dispatch = useDispatch();
   let history = useHistory();
 

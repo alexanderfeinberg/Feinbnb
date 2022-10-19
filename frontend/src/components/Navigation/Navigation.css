@@ -29,10 +29,6 @@
   margin: 5px;
 }
 
-.profile-dropdown div div a:hover {
-  background-color: darkgray;
-}
-
 .profile-dropdown > div {
   color: grey;
 }
@@ -42,9 +38,6 @@ a {
   color: inherit;
 }
 
-.profile-action-btns {
-  border-bottom: 1px solid lightgrey;
-}
 .user-info {
   border-bottom: 1px solid lightgrey;
 }
@@ -55,9 +48,6 @@ a {
   height: 100%;
 }
 
-.profile-button-btn > button {
-  border-radius: 20px;
-  border: 2px solid lightgray;
-  width: 4.5rem;
-  height: 2.5rem;
+.nav-bar i {
+  color: gray;
 }

@@ -53,8 +53,8 @@
   text-decoration: underline;
 }
 
-/* .reserve-btn button {
-  background-color: darkgray;
+.reserve-btn button {
+  margin-top: 10px;
+  width: 100%;
   font-weight: 500;
-
-} */
+}

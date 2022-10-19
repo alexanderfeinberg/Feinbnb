@@ -1,0 +1,30 @@
+.login-action-btns button {
+  border: none;
+}
+.nav-right-btns {
+  display: flex;
+  align-items: center;
+}
+
+.profile-dropdown {
+  width: 225px;
+}
+
+.profile-action-btns {
+  border-bottom: 1px solid lightgrey;
+}
+
+.profile-button-btn > button {
+  border-radius: 20px;
+  border: 2px solid lightgray;
+  width: 4.5rem;
+  height: 2.5rem;
+  background-color: white;
+}
+.profile-button-btn button:hover {
+  background-color: #fa274e;
+  color: white;
+}
+.host-home-nav {
+  margin-right: 1.5rem;
+}

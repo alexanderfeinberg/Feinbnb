@@ -33,8 +33,9 @@ const AllReviews = ({ props: { user, reviews, spot, numberOfReviews } }) => {
             {numReviews} {numReviews > 1 ? "reviews" : "review"}
           </div>
         </div>
+        <div className="subtitle-sep">·</div>
         <div className="add-comment">
-          {user && <button onClick={handleReview}>Leave a review</button>}
+          {user && <a onClick={handleReview}>Leave a review</a>}
         </div>
       </div>
       <div className="review-content">

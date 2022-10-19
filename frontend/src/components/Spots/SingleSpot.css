@@ -88,21 +88,9 @@
 
 .bottom-spot-info-left {
   width: 60%;
-}
-
-button:not(.reserve-btn button) {
-  border-radius: 7px;
-  background-color: white;
-  border: 1px solid lightgray;
-  height: 2rem;
-  cursor: pointer;
-  color: black;
-  font-weight: 500;
-}
-
-button:hover:not(.reserve-btn button) {
-  background-color: #ff385c;
-  color: white;
+  display: flex;
+  flex-direction: column;
+  flex-flow: wrap;
 }
 
 .ratingsCount a {
