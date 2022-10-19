@@ -5,7 +5,7 @@ const SpotReserveAction = ({ spot }) => {
   const { numReviews, setNumReviews, starRating, setStarRating } =
     useReviewContext();
   return (
-    <div class="reserve-container">
+    <div className="reserve-container">
       <div className="top-container-info">
         <div className="reserve-card-price">
           ${spot.price} <div className="support-text">night</div>

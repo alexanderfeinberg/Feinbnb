@@ -6,7 +6,7 @@ const SpotFeatures = ({ spot }) => {
     <div className="spot-feature-list">
       <div className="spot-feature">
         <div className="icon">
-          <i class="fa fa-desktop fa-2x" aria-hidden="true"></i>
+          <i className="fa fa-desktop fa-2x" aria-hidden="true"></i>
         </div>
         <div className="spot-feature-info">
           <div className="spot-feature-title">Dedicated workspace</div>
@@ -17,7 +17,7 @@ const SpotFeatures = ({ spot }) => {
       </div>
       <div className="spot-feature">
         <div className="icon">
-          <i class="fa fa-trophy fa-2x" aria-hidden="true"></i>
+          <i className="fa fa-trophy fa-2x" aria-hidden="true"></i>
         </div>
         <div className="spot-feature-info">
           <div className="spot-feature-title">
@@ -31,7 +31,7 @@ const SpotFeatures = ({ spot }) => {
       </div>
       <div className="spot-feature">
         <div className="icon">
-          <i class="fa fa-map-marker fa-2x" aria-hidden="true"></i>
+          <i className="fa fa-map-marker fa-2x" aria-hidden="true"></i>
         </div>
         <div className="spot-feature-info">
           <div className="spot-feature-title">Great location</div>
