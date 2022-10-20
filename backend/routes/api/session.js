@@ -48,7 +48,8 @@ router.delete("/", (_req, res) => {
   return res.json({ message: "success" });
 });
 
-router.get("/", restoreUser, (req, res) => {
+//restoreUser
+router.get("/", (req, res) => {
   const { user } = req;
   if (user) {
     return res.json(user.toSafeObject(req)); //delete req?
