@@ -1,7 +1,7 @@
 /* TODO Add site wide styles */
 body {
   margin: 0px;
-  font-family: "Nunito", "Roboto", "Helvetica Neue", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
 #root > *:not(.nav-bar) {
