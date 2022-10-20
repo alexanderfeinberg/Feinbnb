@@ -33,14 +33,18 @@ const AllReviews = ({ props: { user, reviews, spot, numberOfReviews } }) => {
             {numReviews} {numReviews > 1 ? "reviews" : "review"}
           </div>
         </div>
-        {user && <div className="subtitle-sep">·</div>}
-        <div className="add-comment">
-          {user && <a onClick={handleReview}>Leave a review</a>}
-        </div>
+        {user && spot && spot.ownerId !== user.id && (
+          <>
+            <div className="subtitle-sep">·</div>
+            <div className="add-comment">
+              <a onClick={handleReview}>Leave a review</a>
+            </div>
+          </>
+        )}
       </div>
       <div className="review-content">
         {Object.values(reviews).map((review) => (
-          <ReviewCard key={review.id} review={review} user={user} />
+          <ReviewCard key={review.id} review={review} user={user} spot={spot} />
         ))}
       </div>
     </>

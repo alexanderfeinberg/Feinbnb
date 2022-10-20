@@ -1,7 +1,11 @@
 import "./ReviewCard.css";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { deleteReviewThunk } from "../../store/reviews/reviewThunk";
+import {
+  deleteReviewThunk,
+  getSpotReviewsThunk,
+} from "../../store/reviews/reviewThunk";
+
 import { useHistory } from "react-router-dom";
 
 const months = {
@@ -27,7 +31,7 @@ const formatDate = (date) => {
   return { year, month };
 };
 
-const ReviewCard = ({ review, user }) => {
+const ReviewCard = ({ review, user, spot }) => {
   console.log("REVIEW CARD RERENDER");
   let dispatch = useDispatch();
   let history = useHistory();
@@ -37,8 +41,10 @@ const ReviewCard = ({ review, user }) => {
 
   const handleDelete = (e) => {
     const id = e.target.getAttribute("data-remove");
-    dispatch(deleteReviewThunk(id));
-    history.push("/reviews/current");
+    dispatch(deleteReviewThunk(id)).then(() =>
+      dispatch(getSpotReviewsThunk(spot.id))
+    );
+    // history.push("/reviews/current");
   };
 
   return (
@@ -46,7 +52,8 @@ const ReviewCard = ({ review, user }) => {
       <div className="top-half">
         <div className="review-title">
           <div className="review-name">
-            {review["User"] ? review["User"]["firstName"] : user.firstName}
+            {/* {review["User"] ? review["User"]["firstName"] : user.firstName} */}
+            {review["User"] && review["User"]["firstName"]}
           </div>
           <div className="review-delete">
             {user && (!review.User || user.id === review.User.id) && (

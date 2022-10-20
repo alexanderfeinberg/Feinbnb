@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -19,8 +19,13 @@ const CreateSpotForm = ({ spot }) => {
   const [stars, setStars] = useState(0);
   const [errors, setErrors] = useState([]);
 
+  useEffect(() => {
+    setErrors([]);
+  }, [stars]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     const newReview = {
       review,
       stars,
@@ -31,17 +36,18 @@ const CreateSpotForm = ({ spot }) => {
       .then((res) => {
         setShowModal(false);
       })
-      .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
+      // .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
       .catch(async (res) => {
         const data = await res.json();
-        if (data) setErrors([data]);
+        console.log("CAUGHT ERR ", data);
+        if (data) setErrors(data.errors ? data.errors : [data.message]);
       });
   };
   return (
     <form onSubmit={handleSubmit}>
       <h3>Leave a review</h3>
       {errors.length > 0 && (
-        <ul>
+        <ul className="errors">
           {errors.map((err, idx) => {
             return <li key={idx}>{err}</li>;
           })}
@@ -66,7 +72,9 @@ const CreateSpotForm = ({ spot }) => {
         required
       />
 
-      <button type="submit">Submit Review</button>
+      <button type="submit" disabled={errors.length > 0 ? true : false}>
+        Submit Review
+      </button>
     </form>
   );
 };

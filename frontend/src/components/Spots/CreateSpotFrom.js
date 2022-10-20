@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSpotReviewsThunk } from "../../store/reviews/reviewThunk";
+import { getSpotThunk } from "../../store/spots/spotThunks";
 
 import {
   addSpotThunk,
@@ -17,6 +18,11 @@ function CreateSpotForm() {
   const { showModal, setShowModal, defaultValue, setDefaultValue } =
     useContext(MenuContext);
   let spot = defaultValue;
+  let preview = spot
+    ? spot.SpotImages.filter((img) => img.preview === true)[0].url
+    : null;
+
+  console.log("SPOT ", spot);
 
   const [address, setAddress] = useState(spot ? spot.address : "");
   const [city, setCity] = useState(spot ? spot.city : "");
@@ -28,10 +34,13 @@ function CreateSpotForm() {
   const [description, setDescription] = useState(spot ? spot.description : "");
   const [price, setPrice] = useState(spot ? spot.price : 0);
   const [errors, setErrors] = useState([]);
-  const [previewImage, setPreviewImage] = useState("");
+  const [previewImage, setPreviewImage] = useState(spot ? preview : "");
+  const [hasSubmitted, setHasSubmitted] = useState(false);
+  console.log("ERRORS ", errors);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setHasSubmitted(true);
     setErrors([]);
     const newSpot = {
       address,
@@ -44,6 +53,7 @@ function CreateSpotForm() {
       description,
       price,
     };
+
     if (!spot)
       return dispatch(addSpotThunk(newSpot))
         .then((resSpot) => {
@@ -67,22 +77,56 @@ function CreateSpotForm() {
         spot[key] = newSpot[key];
       }
       return dispatch(updateSpotThunk(spot))
+        .then((res) => {
+          addImageThunk(previewImage, spot.id);
+        })
+        .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
         .then((resSpot) => {
           setShowModal(false);
-          history.push(`/spots/${resSpot.id}`);
+          history.push(`/spots/${spot.id}`);
         })
         .catch(async (res) => {
+          console.log("ERR ", res);
           const data = await res.json();
           if (data) setErrors([data.message]);
         });
     }
   };
+
+  useEffect(() => {
+    const errors = [];
+    if (!address.length) errors.push("Address is required.");
+    if (!city.length) errors.push("City is required.");
+    if (!state.length) errors.push("State is required.");
+    if (!country.length) errors.push("Country is required.");
+    if (!lat) errors.push("Latitude must be greater than 0.");
+    if (!long) errors.push("Longitude must be greater than 0.");
+    if (!name.length) errors.push("Spot name is required.");
+    if (!description.length || description.length > 250)
+      errors.push("Description must be between 1 and 250 characters");
+    if (price < 1) errors.push("Price must be greater than 0.");
+    if (!previewImage.length) errors.push("Preview Image is required.");
+
+    setErrors(errors);
+  }, [
+    address,
+    city,
+    state,
+    country,
+    lat,
+    long,
+    name,
+    description,
+    price,
+    previewImage,
+  ]);
+
   return (
     <>
       <h3>Become a host</h3>
       <form onSubmit={handleSubmit}>
-        {errors.length > 0 && (
-          <ul>
+        {hasSubmitted && errors.length > 0 && (
+          <ul className="errors">
             {errors.map((err, idx) => {
               return <li key={idx}>{err}</li>;
             })}
@@ -174,7 +218,12 @@ function CreateSpotForm() {
           required
         />
 
-        <button type="submit">{spot ? `Update Spot` : `Create Spot`}</button>
+        <button
+          type="submit"
+          disabled={errors.length > 0 && hasSubmitted ? true : false}
+        >
+          {spot ? `Update Spot` : `Create Spot`}
+        </button>
       </form>
     </>
   );

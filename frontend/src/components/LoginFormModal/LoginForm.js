@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -18,9 +18,13 @@ function LoginForm() {
   const [errors, setErrors] = useState([]);
   const { showModal, setShowModal } = useContext(MenuContext);
 
-  //   if (sessionUser) {
-  //     return <Redirect to="/" />;
-  //   }
+  useEffect(() => {
+    setErrors([]);
+  }, [credential, password]);
+
+  if (sessionUser) {
+    return <Redirect to="/" />;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +46,7 @@ function LoginForm() {
       <h3>Welcome to Feinbnb</h3>
       <form onSubmit={handleSubmit}>
         {errors.length > 0 && (
-          <ul>
+          <ul className="errors">
             {errors.map((error, idx) => (
               <li key={idx}>{error}</li>
             ))}
@@ -65,7 +69,9 @@ function LoginForm() {
           required
         />
 
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={errors.length > 0 ? true : false}>
+          Log In
+        </button>
       </form>
     </>
   );

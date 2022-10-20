@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
@@ -17,12 +17,14 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [errors, setErrors] = useState([]);
+
   const { showModal, setShowModal } = useContext(MenuContext);
 
   if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (password === confirmPassword) {
       setErrors([]);
       return dispatch(
@@ -37,7 +39,7 @@ function SignupFormPage() {
         .then(() => setShowModal(false))
         .catch(async (res) => {
           const data = await res.json();
-          if (data) setErrors([data]);
+          if (data) setErrors([...data.errors]);
         });
     }
     return setErrors([
@@ -51,7 +53,7 @@ function SignupFormPage() {
       <h3>Welcome to Feinbnb</h3>
       <form onSubmit={handleSubmit}>
         {errors.length > 0 && (
-          <ul>
+          <ul className="errors">
             {errors.map((error, idx) => (
               <li key={idx}>{error}</li>
             ))}
@@ -103,7 +105,9 @@ function SignupFormPage() {
           required
         />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={errors.length > 0 ? true : false}>
+          Sign Up
+        </button>
       </form>
     </>
   );

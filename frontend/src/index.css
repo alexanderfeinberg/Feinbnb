@@ -40,3 +40,7 @@ button[disabled] {
 i {
   color: black;
 }
+
+.errors li {
+  color: red;
+}
