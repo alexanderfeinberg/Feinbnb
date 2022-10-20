@@ -7,6 +7,7 @@ import { MenuContext } from "../../context/MenuModal";
 import CreateSpotFormModal from "../Spots/CreateSpotFormModal";
 import HostHome from "./HostHome";
 import SignupFormModal from "../SignupFormPage/SignupFormModal";
+import logo from "../../static/logo.png";
 
 import "./Navigation.css";
 
@@ -28,7 +29,7 @@ function Navigation({ isLoaded }) {
     <div className="nav-bar">
       <div className="home-link">
         <NavLink exact to="/">
-          Home
+          <img src={logo} />
         </NavLink>
       </div>
       <CreateSpotFormModal />

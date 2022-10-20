@@ -64,7 +64,9 @@ const AllSpots = ({ isCurrent }) => {
                     </div>
                   </div>
                   <div className="address">{spot.address}</div>
-                  <div className="price">${spot.price} night</div>
+                  <div className="price">
+                    <div className="price-amt-text">${spot.price}</div> night
+                  </div>
                 </div>
               </div>
             );

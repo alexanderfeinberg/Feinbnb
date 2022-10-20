@@ -30,7 +30,8 @@ const AllReviews = ({ props: { user, reviews, spot, numberOfReviews } }) => {
           <div className="subtitle-sep">·</div>
           <CreateSpotFormModal spot={spot} />
           <div className="rating-count">
-            {numReviews} {numReviews > 1 ? "reviews" : "review"}
+            {numReviews}{" "}
+            {numReviews > 1 || numReviews < 1 ? "reviews" : "review"}
           </div>
         </div>
         {user && spot && spot.ownerId !== user.id && (

@@ -5,8 +5,8 @@ body {
 }
 
 #root > *:not(.nav-bar) {
-  margin-right: 60px;
-  margin-left: 60px;
+  /* margin-right: 60px;
+  margin-left: 60px; */
 }
 
 a {

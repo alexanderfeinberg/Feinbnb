@@ -25,6 +25,7 @@
 .all-bottom-details > * {
   margin-top: 6px;
   margin-bottom: 6px;
+  font-size: 14px;
 }
 .all-bottom-details {
   padding: 0.35rem;
@@ -52,4 +53,12 @@
   margin: 0.25rem;
   width: 270px;
   height: 290px;
+}
+
+.price-amt-text {
+  font-weight: 600;
+  margin-right: 5px;
+}
+.price {
+  display: flex;
 }

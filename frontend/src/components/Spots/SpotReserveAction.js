@@ -19,7 +19,8 @@ const SpotReserveAction = ({ spot }) => {
           <div className="subtitle-sep">·</div>
           <div className="review-count">
             <a href="#all-reviews">
-              {numReviews} {numReviews > 1 ? "reviews" : "review"}
+              {numReviews}{" "}
+              {numReviews > 1 || numReviews < 1 ? "reviews" : "review"}
             </a>
           </div>
         </div>

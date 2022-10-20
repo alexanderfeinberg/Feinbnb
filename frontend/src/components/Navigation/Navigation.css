@@ -3,8 +3,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* border-bottom: 1px solid lightgrey; */
+  padding: 10px;
+  border-bottom: 0.5px solid lightgrey;
   margin-right: 0px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+  /* width: 100%; */
 }
 
 .action-btn {
@@ -50,4 +56,9 @@ a {
 
 .nav-bar i {
   color: gray;
+}
+
+.home-link img {
+  height: 60px;
+  width: 60px;
 }
