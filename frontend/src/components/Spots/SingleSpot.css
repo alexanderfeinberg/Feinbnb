@@ -17,7 +17,7 @@
 
 .single-spot-image div {
   gap: 5px;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .supporting-images {
