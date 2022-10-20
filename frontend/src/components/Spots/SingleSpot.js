@@ -61,10 +61,11 @@ const SingleSpot = () => {
   useEffect(() => {
     console.log("SINGLE SPOT USE EFFECT");
 
-    dispatch(getSpotThunk(spotId)).then((res) => res);
-    dispatch(getSpotReviewsThunk(spotId)).then((res) => {
-      setIsLoaded(true);
-    });
+    dispatch(getSpotThunk(spotId)).then((res) =>
+      dispatch(getSpotReviewsThunk(spotId)).then((res) => {
+        setIsLoaded(true);
+      })
+    );
 
     return () => setIsLoaded(false);
   }, [dispatch, spotId]);
