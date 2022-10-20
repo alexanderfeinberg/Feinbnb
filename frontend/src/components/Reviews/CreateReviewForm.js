@@ -36,7 +36,7 @@ const CreateSpotForm = ({ spot }) => {
       .then((res) => {
         setShowModal(false);
       })
-      // .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
+      .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
       .catch(async (res) => {
         const data = await res.json();
         console.log("CAUGHT ERR ", data);

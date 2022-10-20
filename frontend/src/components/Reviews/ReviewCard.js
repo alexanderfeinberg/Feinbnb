@@ -5,6 +5,7 @@ import {
   deleteReviewThunk,
   getSpotReviewsThunk,
 } from "../../store/reviews/reviewThunk";
+import { getSpotThunk } from "../../store/spots/spotThunks";
 
 import { useHistory } from "react-router-dom";
 
@@ -41,9 +42,9 @@ const ReviewCard = ({ review, user, spot }) => {
 
   const handleDelete = (e) => {
     const id = e.target.getAttribute("data-remove");
-    dispatch(deleteReviewThunk(id)).then(() =>
-      dispatch(getSpotReviewsThunk(spot.id))
-    );
+    dispatch(deleteReviewThunk(id))
+      .then(() => dispatch(getSpotReviewsThunk(spot.id)))
+      .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}));
     // history.push("/reviews/current");
   };
 
