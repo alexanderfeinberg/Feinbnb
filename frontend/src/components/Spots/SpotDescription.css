@@ -1,0 +1,9 @@
+.spot-description {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid lightgray;
+  margin-bottom: 20px;
+  padding: 20px;
+  padding-top: 0px;
+}
