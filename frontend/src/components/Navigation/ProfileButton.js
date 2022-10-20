@@ -79,6 +79,20 @@ function ProfileButton({ user }) {
           <div>
             <a onClick={() => setShowModal("signup")}>Sign Up</a>
           </div>
+          <div>
+            <a
+              onClick={async () => {
+                dispatch(
+                  sessionActions.login({
+                    credential: "Demo-lition",
+                    password: "password",
+                  })
+                ).then(() => setShowModal(false));
+              }}
+            >
+              Demo User
+            </a>
+          </div>
         </div>
         <div className="login-secondary-btns">
           <HostHome user={user} message={"Host your home"} />
