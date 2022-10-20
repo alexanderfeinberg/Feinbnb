@@ -49,8 +49,7 @@ const SingleSpot = () => {
   // console.log("USER ID ", user.id, spot.ownerId);
 
   const handleDelete = (e) => {
-    dispatch(deleteSpotThunk(spot));
-    history.push("/spots/current");
+    dispatch(deleteSpotThunk(spot)).then(() => history.push("/spots/current"));
   };
 
   const handleEdit = (e) => {
