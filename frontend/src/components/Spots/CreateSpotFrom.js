@@ -79,7 +79,7 @@ function CreateSpotForm() {
   };
   return (
     <>
-      <h3>Host your spot</h3>
+      <h3>Become a host</h3>
       <form onSubmit={handleSubmit}>
         {errors.length > 0 && (
           <ul>

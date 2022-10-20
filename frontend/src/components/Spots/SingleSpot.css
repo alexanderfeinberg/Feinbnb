@@ -97,3 +97,13 @@
   color: gray;
   text-decoration: underline;
 }
+
+.action-buttons button {
+  background-color: white;
+  color: black;
+  margin: 3px;
+  border-color: black;
+}
+.action-buttons button:hover {
+  background-color: rgb(233, 232, 232);
+}
