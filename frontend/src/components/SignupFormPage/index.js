@@ -20,6 +20,10 @@ function SignupFormPage() {
 
   const { showModal, setShowModal } = useContext(MenuContext);
 
+  useEffect(() => {
+    setErrors([]);
+  }, [email, firstName, lastName, username, password]);
+
   if (sessionUser) return <Redirect to="/" />;
 
   const handleSubmit = (e) => {
