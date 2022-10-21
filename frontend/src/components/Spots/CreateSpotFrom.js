@@ -99,8 +99,8 @@ function CreateSpotForm() {
     if (!city.length) errors.push("City is required.");
     if (!state.length) errors.push("State is required.");
     if (!country.length) errors.push("Country is required.");
-    if (!lat) errors.push("Latitude must be greater than 0.");
-    if (!long) errors.push("Longitude must be greater than 0.");
+    if (!lat) errors.push("Latitude is required.");
+    if (!long) errors.push("Longitude is required.");
     if (!name.length) errors.push("Spot name is required.");
     if (!description.length || description.length > 250)
       errors.push("Description must be between 1 and 250 characters");
@@ -172,7 +172,6 @@ function CreateSpotForm() {
           name="lat"
           value={lat}
           onChange={(e) => setLat(e.target.value)}
-          min="1"
           required
         />
 
@@ -182,7 +181,6 @@ function CreateSpotForm() {
           value={long}
           onChange={(e) => setLong(e.target.value)}
           placeholder="Longitude"
-          min="1"
           required
         />
 
