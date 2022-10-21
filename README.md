@@ -3,8 +3,8 @@
 ## Key Functionality Features:
 
 - Sign up or login to leave reviews of listings, or to create your very own listing!
-- Create, Update, and Delete a spot for others to stay in
-- Create, Delte a review of other user's listings
+- Create, Update, View, and Delete a spot for others to stay in
+- Create, Delete, and View a review of other user's listings
 
 ## About this project
 
