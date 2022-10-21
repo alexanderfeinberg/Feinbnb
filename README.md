@@ -35,4 +35,39 @@ Feinbnb is a full-stack application cloning Aribnb. This project utilizies the f
 
 ## Instructions
 
-Clone this repo, and run "npm install" on the root directory. Then, cd into the backend folder, and run "npm start" to run a local server for backend requests. Open an additional terminal and cd into the frontend folder, and run "npm start" to run a local server for the frontend application.
+1. Clone this repo,
+2. cd into the backend server and install dependencies
+
+```
+cd backend
+npm install
+```
+
+3. Create a .env file at the root of the backend directory and set values for PORT, DB_FILE, JWT_SECRET, and JWT_EXPIRES_IN
+
+4. Migrate and seed existing data in the root of the backend folder
+
+```
+npx dotenv sequelize db:migrate
+npx dotenv sequelize db:seed:all
+```
+
+5. Start the backend server, then cd into the root folder
+
+```
+npm start
+cd ..
+```
+
+6. cd into the front end folder from the root directory and install dependencies
+
+```
+cd frontend
+npm install
+```
+
+7. Open a new terminal and start the frontend server
+
+```
+npm start
+```
