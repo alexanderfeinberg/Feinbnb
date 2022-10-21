@@ -201,13 +201,15 @@ function CreateSpotForm() {
           placeholder="Spot Description"
           required
         />
-        <input
-          type="text"
-          value={previewImage}
-          onChange={(e) => setPreviewImage(e.target.value)}
-          placeholder="Spot Preview Image URL"
-          required
-        />
+        {!spot && (
+          <input
+            type="text"
+            value={previewImage}
+            onChange={(e) => setPreviewImage(e.target.value)}
+            placeholder="Spot Preview Image URL"
+            required
+          />
+        )}
         <label>Price:</label>
         <input
           type="number"
