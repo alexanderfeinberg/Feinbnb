@@ -77,9 +77,6 @@ function CreateSpotForm() {
         spot[key] = newSpot[key];
       }
       return dispatch(updateSpotThunk(spot))
-        .then((res) => {
-          addImageThunk(previewImage, spot.id);
-        })
         .then(() => dispatch(getSpotThunk(spot.id)).then((res) => {}))
         .then((resSpot) => {
           setShowModal(false);
