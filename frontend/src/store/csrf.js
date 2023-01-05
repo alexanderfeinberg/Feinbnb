@@ -19,3 +19,13 @@ export async function csrfFetch(url, options = {}) {
 export async function restoreCSRF() {
   return csrfFetch("/api/csrf/restore");
 }
+
+export const convertDate = (date) => {
+  console.log("DATEEEEEEE ", date);
+  const year = date.getFullYear();
+  let month =
+    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
+
+  let day = date.getDate() < 10 ? `0${date.getDate() + 1}` : date.getDate() + 1;
+  return `${year}-${month}-${day}`;
+};

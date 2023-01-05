@@ -1,9 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const { setTokenCookie, requireAuth } = require("../../utils/auth");
-const { User } = require("../../db/models");
+const { User, Booking, Spot } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+const {
+  default: Bookings,
+} = require("../../../frontend/src/components/Bookings/Bookings");
+const { setPreviewImage } = require("./spots");
 
 const validateSignup = [
   check("email")
@@ -58,6 +62,25 @@ router.post("/", validateSignup, async (req, res) => {
   // user.dataValues.token = setTokenCookie(res, user);
 
   return res.json(user);
+});
+
+router.get("/:userId/bookings", requireAuth, async (req, res, next) => {
+  const bookings = await Booking.findAll({
+    where: {
+      userId: req.params.userId,
+    },
+    include: {
+      model: Spot,
+    },
+  });
+
+  for (let i = 0; i < bookings.length; i++) {
+    let booking = bookings[i];
+    booking.Spot.dataValues.previewImage = await setPreviewImage(booking.Spot);
+    // console.log(booking.Spot);
+  }
+
+  res.json({ Bookings: bookings });
 });
 
 module.exports = router;

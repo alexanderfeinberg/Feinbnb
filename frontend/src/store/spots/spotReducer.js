@@ -8,6 +8,9 @@ import {
   DELETE_SPOT,
   DELETE_SPOT_IMAGE,
 } from "./spotAction";
+
+import { objectAssign } from "../bookings/bookingReducer";
+
 const initialState = {
   spots: {},
 };
@@ -28,10 +31,12 @@ const spotReducer = (state = initialState, action) => {
       console.log("LOAD SPOT ", spots);
       return { ...state, ...spots };
     case LOAD_ALL_SPOTS_USER:
+      // const userSpots = {};
       const userSpots = {};
-      spots = { ...state.spots, userSpots: {} };
-      action.spots.forEach((spot) => (spots["userSpots"][spot.id] = spot));
-      return { ...state, ...spots };
+      action.spots.forEach((spot) => {
+        userSpots[spot.id] = spot;
+      });
+      return userSpots;
     case ADD_SPOT:
       console.log("STATE ", state);
       spots = { ...state.spots, [action.spot.id]: action.spot };

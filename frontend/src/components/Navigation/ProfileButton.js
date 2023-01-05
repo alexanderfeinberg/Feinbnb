@@ -38,25 +38,27 @@ function ProfileButton({ user }) {
   if (user) {
     dropdown = (
       <>
-        <div className="user-info">
-          <div>{user.username}</div>
-          <div>{user.email}</div>
+        <div className="dropdown-item user-info">
+          <div className="dropdown-item-content">{user.username}</div>
+          <div className="dropdown-item-content">{user.email}</div>
         </div>
-        <div className="profile-action-btns">
-          <div>
+        <div className="dropdown-item profile-action-btns">
+          <div className="hover-background dropdown-item-content">
             <Link to="/spots/current/" className="btn btn-primary">
               My spots
             </Link>
           </div>
-          <div>
+          <div className="hover-background dropdown-item-content">
             <Link to="/reviews/current/" className="btn btn-primary">
               My reviews
             </Link>
           </div>
         </div>
-        <div className="profile-secondary-btns">
-          <HostHome user={user} message={"Host your home"} />
-          <div>
+        <div className="dropdown-item profile-secondary-btns">
+          <div className="hover-background  dropdown-item-content">
+            <HostHome user={user} message={"Host your home"} />
+          </div>
+          <div className="hover-background dropdown-item-content">
             <Link onClick={logout}>Log Out</Link>
           </div>
         </div>

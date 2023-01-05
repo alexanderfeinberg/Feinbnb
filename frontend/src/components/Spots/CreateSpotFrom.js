@@ -53,6 +53,8 @@ function CreateSpotForm() {
       description,
       price,
     };
+    alert("This spot is under review");
+    return;
 
     if (!spot)
       return dispatch(addSpotThunk(newSpot))

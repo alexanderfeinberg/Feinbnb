@@ -1,0 +1,29 @@
+.spot-card-container {
+  display: flex;
+  height: 100px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+}
+
+.spot-card-side > img {
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 1;
+  border-radius: 8px;
+}
+
+.spot-card-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  line-height: 25px;
+}
+
+.spot-card-info {
+  color: gray;
+  display: flex;
+}
+
+.spot-card-sub-info {
+  margin-left: 10px;
+}

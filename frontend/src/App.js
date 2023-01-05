@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
-import SignupFormPage from "./components/SignupFormPage";
+import Homepage from "./components/Homepage/Homepage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import { MenuProvider } from "./context/MenuModal";
@@ -9,9 +9,15 @@ import AllSpots from "./components/Spots/AllSpots";
 import SingleSpot from "./components/Spots/SingleSpot";
 import UserReviewWrapper from "./components/Reviews/UserReviewWrapper";
 import ReviewContextProvider from "./context/reviewCountStarContext";
+import UserSpots from "./components/UserSpots.js/UserSpots";
+import UserBookings from "./components/UserBookings/UserBookings";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.session.user);
+
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
@@ -27,10 +33,16 @@ function App() {
             <Switch>
               <Route exact path="/">
                 {/* <SignupFormPage /> */}
-                <AllSpots isCurrent={false} />
+                <Homepage />
+              </Route>
+              <Route exact path="/profile">
+                <Profile user={user} />
               </Route>
               <Route exact path="/spots/current">
-                <AllSpots isCurrent={true} />
+                <UserSpots />
+              </Route>
+              <Route exact path="/bookings/current">
+                <UserBookings />
               </Route>
               <Route path="/spots/:spotId">
                 <SingleSpot />

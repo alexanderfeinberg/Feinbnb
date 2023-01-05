@@ -23,7 +23,17 @@
 }
 .profile-button-btn button:hover {
   background-color: #fa274e;
+  color: white !important;
 }
 .host-home-nav {
   margin-right: 1.5rem;
+}
+
+.dropdown-item-content {
+  padding: 5px 0px;
+}
+
+.hover-background:hover {
+  background-color: #ddd;
+  cursor: pointer;
 }

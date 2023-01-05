@@ -1,0 +1,8 @@
+.profile-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.profile-content {
+  padding-left: 40px;
+}

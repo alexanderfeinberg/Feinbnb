@@ -8,29 +8,10 @@ import {
 import { useEffect } from "react";
 import "./AllSpots.css";
 
-const AllSpots = ({ isCurrent }) => {
-  let dispatch = useDispatch();
+const AllSpots = ({ isCurrent, spots }) => {
   let history = useHistory();
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  console.log("IS LOADED", isLoaded);
-
-  const spots = useSelector((state) =>
-    isCurrent ? state.spots["userSpots"] : state.spots
-  );
   const user = useSelector((state) => state.session.user);
-
-  console.log("USER SPOTS ", spots, isLoaded);
-
-  useEffect(() => {
-    console.log("USEFFECT");
-    if (!isCurrent) dispatch(getAllSpotsThunk()).then(() => setIsLoaded(true));
-    if (isCurrent && !user) return;
-    if (isCurrent)
-      dispatch(getUserSpotsThunk(user)).then(() => setIsLoaded(true));
-
-    return () => setIsLoaded(false);
-  }, [dispatch, isCurrent, user]);
 
   const handleClick = (e) => {
     console.log(e);
