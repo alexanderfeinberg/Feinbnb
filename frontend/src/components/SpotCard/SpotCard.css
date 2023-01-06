@@ -1,8 +1,13 @@
 .spot-card-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.spot-card-left {
   display: flex;
   height: 100px;
   box-sizing: border-box;
-  margin-bottom: 20px;
 }
 
 .spot-card-side > img {
@@ -26,4 +31,18 @@
 
 .spot-card-sub-info {
   margin-left: 10px;
+}
+
+.booking-action-btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.booking-action-btns button {
+  padding: 5px 5px;
+  width: 60px;
+  border: none;
+  border-radius: 5px;
+  margin: 0px 10px;
+  height: auto;
 }

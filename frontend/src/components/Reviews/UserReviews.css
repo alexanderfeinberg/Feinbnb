@@ -1,0 +1,10 @@
+.review-header {
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.review-count-profile {
+  padding-left: 5px;
+  font-size: 17px;
+}

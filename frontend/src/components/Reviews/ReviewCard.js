@@ -65,7 +65,7 @@ const ReviewCard = ({ review, user, spot }) => {
           </div>
         </div>
         <div className="review-date">
-          {month} {year}
+          {month}, {year}
         </div>
       </div>
       <div className="bottom-half">

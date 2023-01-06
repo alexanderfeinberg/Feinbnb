@@ -1,10 +1,12 @@
-// import "./Bookings.css";
 import { useEffect, useState } from "react";
 import SpotCard from "../SpotCard/SpotCard";
+// import "./Bookings.css";
 
 const Bookings = ({ bookings }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [previewBookings, setPreviewBookings] = useState({});
+  const [errors, setErrors] = useState([]);
+
   useEffect(() => {
     const length = Object.values(bookings).length;
     const newBookings = {};
@@ -32,10 +34,14 @@ const Bookings = ({ bookings }) => {
 
   return (
     <div className="bookings-container">
+      <div className="errors">
+        {errors.length > 0 &&
+          errors.map((err, idx) => <div key={idx}>{err}</div>)}
+      </div>
       <h4>Trips</h4>
       {Object.values(previewBookings).map((booking) => (
         <div className="individual-booking" key={booking.id}>
-          <SpotCard type={"BOOKING"} data={booking} />
+          <SpotCard type={"BOOKING"} data={booking} onErrors={setErrors} />
         </div>
       ))}
     </div>

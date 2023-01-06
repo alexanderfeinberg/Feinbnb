@@ -1,8 +1,16 @@
 .profile-container {
   display: flex;
   align-items: flex-start;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 50px auto;
 }
 
 .profile-content {
-  padding-left: 40px;
+  padding-left: 60px;
+  width: 100%;
+}
+
+.profile-item {
+  margin-bottom: 50px;
 }

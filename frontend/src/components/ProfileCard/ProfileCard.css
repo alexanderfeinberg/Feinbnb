@@ -3,4 +3,25 @@
   box-sizing: border-box;
   border-radius: 8px;
   padding: 20px;
+  min-width: 310px;
+  height: 600px;
+}
+
+.profile-card-item {
+  display: flex;
+}
+
+.profile-card-content {
+  margin-left: 8px;
+  margin-bottom: 16px;
+  font-size: 18px;
+}
+
+.confirm-item {
+  display: flex;
+}
+
+.confirm-content {
+  margin-left: 8px;
+  margin-bottom: 16px;
 }

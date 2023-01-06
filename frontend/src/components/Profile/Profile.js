@@ -1,6 +1,7 @@
 import Bookings from "../Bookings/Bookings";
 import Listings from "../Listings/Listings";
 import ProfileCard from "../ProfileCard/ProfileCard";
+import UserReviews from "../Reviews/UserReviews";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { getUserSpotsThunk } from "../../store/spots/spotThunks";
@@ -50,7 +51,9 @@ const Profile = ({ user }) => {
         <div className="profile-item profile-listings">
           <Listings user={user} spots={listings} />
         </div>
-        <div className="profile-item profile-reviews"></div>
+        <div className="profile-item profile-reviews">
+          <UserReviews reviews={reviews} />
+        </div>
       </div>
     </div>
   );

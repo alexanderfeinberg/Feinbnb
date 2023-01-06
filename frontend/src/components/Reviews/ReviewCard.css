@@ -2,11 +2,11 @@
   display: flex;
   box-sizing: border-box;
   flex-direction: column;
-  border: 0.1rem solid black;
+
   border-radius: 0.5rem;
   padding: 2px;
   margin-top: 1rem;
-  width: 100%;
+  width: 33%;
 }
 
 .review-date {
@@ -20,4 +20,8 @@
 
 .review-title button {
   height: 25px;
+}
+
+.bottom-half {
+  margin-top: 10px;
 }

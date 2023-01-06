@@ -43,6 +43,14 @@ export default function bookingReducer(state = initialState, action) {
         loadById.bookingList[booking.id] = booking;
       });
       return loadById;
+
+    case DELETE_BOOKING:
+      const deleteState = objectAssign(state, "bookingList");
+      delete deleteState.bookingList[action.bookingId];
+      if (deleteState.singleBooking.id === action.bookingId) {
+        deleteState.singleBooking = {};
+      }
+      return deleteState;
     default:
       return state;
   }

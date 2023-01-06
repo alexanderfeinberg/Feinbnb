@@ -44,3 +44,7 @@ i {
 .errors li {
   color: red;
 }
+
+.errors {
+  color: red;
+}
