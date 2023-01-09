@@ -7,7 +7,7 @@ const SpotBookingForm = ({ bookingData, onBookingData }) => {
   const [localStartDate, setLocalStartDate] = useState(bookingData.startDate);
   const [localEndDate, setLocalEndDate] = useState(bookingData.endDate);
 
-  console.log("BOOKING DATA IN FORM ", bookingData);
+  console.log("BOOKING DATA IN FORM ", localStartDate);
 
   const convertStrToDate = (str) => {
     const dateParams = str.split("-");
@@ -38,11 +38,16 @@ const SpotBookingForm = ({ bookingData, onBookingData }) => {
   };
 
   useEffect(() => {
-    if (!bookingData.days) {
-      bookingData.days =
-        bookingData.endDate.getDate() - bookingData.startDate.getDate();
+    if (!bookingData.days && !bookingData.totalDays) {
+      onBookingData((prevState) => {
+        return {
+          ...prevState,
+          days: bookingData.endDate.getDate() - bookingData.startDate.getDate(),
+        };
+      });
+
       setIsLoaded(true);
-    }
+    } else if (bookingData.totalDays) setIsLoaded(true);
   }, []);
 
   useEffect(() => {
@@ -50,10 +55,13 @@ const SpotBookingForm = ({ bookingData, onBookingData }) => {
     const endDate = new Date(bookingData.endDate);
     setLocalStartDate(startDate);
     setLocalEndDate(endDate);
-    bookingData.days = endDate.getDate() - startDate.getDate();
     if (startDate.getDate() < endDate.getDate())
       onBookingData((prevState) => {
-        return { ...prevState, isValid: true };
+        return {
+          ...prevState,
+          isValid: true,
+          days: endDate.getDate() - startDate.getDate(),
+        };
       });
   }, [bookingData.startDate, bookingData.endDate]);
 
@@ -68,9 +76,9 @@ const SpotBookingForm = ({ bookingData, onBookingData }) => {
             <input
               type="date"
               name="check-in-date"
-              value={convertDate(bookingData.startDate)}
+              value={convertDate(localStartDate)}
               onChange={startDateHandler}
-              min={convertDate(new Date())}
+              min={localStartDate ? localStartDate : convertDate(new Date())}
               max={convertDate(
                 new Date(
                   localEndDate.getFullYear(),

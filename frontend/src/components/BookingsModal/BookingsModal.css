@@ -1,0 +1,12 @@
+.bookings-header {
+  margin: 0 auto;
+}
+
+.booking-list {
+  overflow-y: scroll;
+  /* overflow: hidden; */
+}
+
+.booking-list {
+  max-height: 600px;
+}

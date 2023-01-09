@@ -7,7 +7,7 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const spots = useSelector((state) => state.spots);
+  const spots = useSelector((state) => state.spots.spots);
 
   useEffect(() => {
     (async () => {

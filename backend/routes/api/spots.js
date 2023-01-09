@@ -63,6 +63,7 @@ const handleQuery = (req) => {
 
 const handleWhere = (req) => {
   const where = {};
+  console.log("WHERE Q ", req.query);
   if (req.query.minLat) {
     where.lat = {
       ...where.lat,
@@ -101,6 +102,26 @@ const handleWhere = (req) => {
     where.price = {
       ...where.price,
       [Op.gte]: val,
+    };
+  }
+
+  if (req.query.city) {
+    let val = req.query.city;
+    console.log("CITYYYYY ", val);
+    where.city = {
+      [Op.like]: val,
+    };
+  }
+  if (req.query.state) {
+    let val = req.query.state;
+    where.state = {
+      [Op.like]: val,
+    };
+  }
+  if (req.query.country) {
+    let val = req.query.countru;
+    where.country = {
+      [Op.like]: val,
     };
   }
 
@@ -263,7 +284,7 @@ router.post(
   validateDates,
   async (req, res, next) => {
     const spot = await Spot.findByPk(req.params.spotId);
-    let { startDate, endDate } = req.body;
+    let { startDate, endDate, totalDays, totalPrice, totalGuests } = req.body;
     validateExists("Spot", spot, next, 404);
 
     if (spot.ownerId === req.user.id) {
@@ -279,6 +300,9 @@ router.post(
       userId: req.user.id,
       startDate: startDate,
       endDate: endDate,
+      totalDays: totalDays,
+      totalGuests: totalGuests,
+      totalPrice: totalPrice,
     });
 
     res.json(newBooking);
@@ -307,6 +331,7 @@ router.post("/", requireAuth, validateSpotCreate, async (req, res, next) => {
 
 router.get("/", validateQuery, async (req, res, next) => {
   let { query, page, size } = handleQuery(req);
+  console.log("QUERY ", query);
   let spots = await Spot.scope("getSpots").findAll({
     include: [
       //   { model: SpotImage, attributes: ["preview"] },

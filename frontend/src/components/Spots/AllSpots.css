@@ -1,6 +1,6 @@
 .all-spots {
   display: flex;
-  justify-content: space-between;
+
   flex-flow: row wrap;
   width: 100%;
   position: relative;
@@ -52,7 +52,7 @@
   border-radius: 0.5rem;
   padding: 2px;
   margin: 0.25rem;
-  width: 270px;
+  width: 250px;
   height: 290px;
 }
 

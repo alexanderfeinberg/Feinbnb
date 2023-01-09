@@ -44,15 +44,15 @@ function ProfileButton({ user }) {
         </div>
         <div className="dropdown-item profile-action-btns">
           <div className="hover-background dropdown-item-content">
-            <Link to="/spots/current/" className="btn btn-primary">
-              My spots
+            <Link to="/profile" className="btn btn-primary">
+              Profile
             </Link>
           </div>
-          <div className="hover-background dropdown-item-content">
+          {/* <div className="hover-background dropdown-item-content">
             <Link to="/reviews/current/" className="btn btn-primary">
               My reviews
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className="dropdown-item profile-secondary-btns">
           <div className="hover-background  dropdown-item-content">

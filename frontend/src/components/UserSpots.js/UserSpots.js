@@ -8,7 +8,7 @@ const UserSpots = () => {
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.session.user);
-  const spots = useSelector((state) => state.spots);
+  const spots = useSelector((state) => state.spots.spots);
 
   useEffect(() => {
     (async () => {

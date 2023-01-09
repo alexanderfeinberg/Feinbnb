@@ -51,6 +51,20 @@ export default function bookingReducer(state = initialState, action) {
         deleteState.singleBooking = {};
       }
       return deleteState;
+
+    case EDIT_BOOKING:
+      const editState = objectAssign(state, "bookingList");
+      editState.bookingList[action.booking.id] = action.booking;
+      editState.bookingList[action.booking.id].Spot.previewImage =
+        state.bookingList[action.booking.id].Spot.previewImage;
+      if (editState.singleBooking.id === action.booking.id) {
+        editState.singleBooking[action.booking.id] = action.booking;
+        editState.singleBooking[action.booking.id].Spot.previewImage =
+          state.singleBooking[action.booking.id].Spot.previewImage;
+      }
+
+      return editState;
+
     default:
       return state;
   }

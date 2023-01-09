@@ -1,11 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import SpotCard from "../SpotCard/SpotCard";
-// import "./Bookings.css";
+import BookingsModal from "../BookingsModal/BookingsModal";
+import { MenuContext } from "../../context/MenuModal";
 
 const Bookings = ({ bookings }) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [previewBookings, setPreviewBookings] = useState({});
   const [errors, setErrors] = useState([]);
+  const [timer, setTimer] = useState();
+
+  const { showModal, setShowModal } = useContext(MenuContext);
 
   useEffect(() => {
     const length = Object.values(bookings).length;
@@ -24,6 +28,17 @@ const Bookings = ({ bookings }) => {
   }, [bookings]);
 
   useEffect(() => {
+    console.log("TIMER USE EFFECT ", timer);
+    if (errors.length) {
+      setTimer(setTimeout(() => setErrors([]), 7000));
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [errors]);
+
+  useEffect(() => {
     if (Object.values(previewBookings).length) {
       console.log("PREV BOOKINGS ", previewBookings);
       setIsLoaded(true);
@@ -34,6 +49,7 @@ const Bookings = ({ bookings }) => {
 
   return (
     <div className="bookings-container">
+      <BookingsModal bookings={bookings} />
       <div className="errors">
         {errors.length > 0 &&
           errors.map((err, idx) => <div key={idx}>{err}</div>)}
@@ -44,6 +60,12 @@ const Bookings = ({ bookings }) => {
           <SpotCard type={"BOOKING"} data={booking} onErrors={setErrors} />
         </div>
       ))}
+      <button
+        className="expand-bookings-btn"
+        onClick={() => setShowModal("bookingModal")}
+      >
+        See all ({Object.keys(bookings).length})
+      </button>
     </div>
   );
 };

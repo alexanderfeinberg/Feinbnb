@@ -21,11 +21,13 @@ export async function restoreCSRF() {
 }
 
 export const convertDate = (date) => {
-  console.log("DATEEEEEEE ", date);
+  console.log("DATEEEEEEE ", date, typeof date);
   const year = date.getFullYear();
   let month =
     date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
 
-  let day = date.getDate() < 10 ? `0${date.getDate() + 1}` : date.getDate() + 1;
+  let day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
+
+  console.log("FINAL DATE ", year, month, day);
   return `${year}-${month}-${day}`;
 };

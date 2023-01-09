@@ -39,6 +39,25 @@ export const getSpotThunk = (spotId) => async (dispatch) => {
   }
 };
 
+export const getSpotsWithParamsThunk = (params) => async (dispatch) => {
+  let paramStr = "?";
+  console.log("PARAMS ", params);
+  for (let [key, value] of Object.entries(params)) {
+    if (value.includes(" ")) {
+      value = value.replace(" ", "%20");
+    }
+    paramStr = paramStr + `${key}=${value}&`;
+  }
+  paramStr = paramStr.slice(0, paramStr.length - 1);
+  console.log("PARAM STR ", paramStr);
+  const response = await csrfFetch(`/api/spots${paramStr}`);
+  if (response.ok) {
+    const spots = await response.json();
+    dispatch(loadAll(spots));
+    return spots;
+  }
+};
+
 export const addSpotThunk = (spot) => async (dispatch) => {
   const response = await csrfFetch("/api/spots", {
     method: "POST",

@@ -6,9 +6,15 @@ const DUMMY_EXPENSES = [
   { id: 2, name: "Service fee", percentage: 0.11 },
 ];
 
-const SpotPricing = ({ spot, bookingData }) => {
+const SpotPricing = ({ spot, bookingData, onBookingData }) => {
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
   const [totalExpense, setTotalExpense] = useState(null);
+
+  useEffect(() => {
+    onBookingData((prevState) => {
+      return { ...prevState, price: totalExpense };
+    });
+  }, [totalExpense]);
 
   useEffect(() => {
     setExpenses(DUMMY_EXPENSES);

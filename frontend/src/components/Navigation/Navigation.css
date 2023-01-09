@@ -62,3 +62,26 @@ a {
   height: 60px;
   width: 60px;
 }
+
+.search-input {
+  width: 300px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+}
+
+.search-results {
+  position: absolute;
+  background-color: white;
+  border: 1px solid lightgray;
+}
+
+.search-result {
+  padding: 10px 5px;
+}
+
+.search-result:hover {
+  background-color: rgb(18, 117, 255);
+  color: white;
+  cursor: pointer;
+}

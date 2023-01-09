@@ -3,10 +3,11 @@ import Listings from "../Listings/Listings";
 import ProfileCard from "../ProfileCard/ProfileCard";
 import UserReviews from "../Reviews/UserReviews";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getUserSpotsThunk } from "../../store/spots/spotThunks";
 import { getUserReviewsThunk } from "../../store/reviews/reviewThunk";
 import { loadBookingsByIdThunk } from "../../store/bookings/bookingThunk";
+import { MenuContext } from "../../context/MenuModal";
 
 import "./Profile.css";
 
@@ -14,11 +15,14 @@ const Profile = ({ user }) => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const listings = useSelector((state) => state.spots);
+  const { showModal, setShowModal } = useContext(MenuContext);
+
+  const listings = useSelector((state) => state.spots.spots);
   const bookings = useSelector((state) => state.bookings.bookingList);
   const reviews = useSelector((state) => state.reviews);
 
   useEffect(() => {
+    setShowModal(false);
     (async () => {
       await dispatch(getUserSpotsThunk(user));
       await dispatch(loadBookingsByIdThunk(user.id));
@@ -42,9 +46,7 @@ const Profile = ({ user }) => {
             Joined in {new Date(user.createdAt).getFullYear()}
           </div>
         </div>
-        <div className="profile-item profile-content-about">
-          <h4>About</h4>
-        </div>
+
         <div className="profile-item profile-trips">
           <Bookings bookings={bookings} />
         </div>

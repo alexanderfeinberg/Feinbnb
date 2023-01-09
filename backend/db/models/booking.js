@@ -38,6 +38,29 @@ module.exports = (sequelize, DataTypes) => {
           isDate: true,
         },
       },
+      totalDays: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          max: 14,
+          min: 1,
+        },
+      },
+      totalGuests: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+          min: 1,
+          max: 5,
+        },
+      },
+      totalPrice: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        validate: {
+          min: 1,
+        },
+      },
     },
     {
       sequelize,

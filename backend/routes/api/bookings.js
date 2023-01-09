@@ -59,7 +59,13 @@ router.put(
       err.status = 403;
       return next(err);
     }
-    const booking = await Booking.findByPk(req.params.bookingId);
+    const booking = await Booking.findByPk(req.params.bookingId, {
+      include: {
+        model: Spot,
+      },
+    });
+    // booking.Spot = await setPreviewImage(booking.Spot);
+
     validateExists("Booking", booking, next, 404);
     validateOwnership("Booking", booking, "userId", req.user, "id", next);
     for (let key of Object.keys(req.body)) {

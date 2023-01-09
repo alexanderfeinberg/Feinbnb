@@ -12,6 +12,7 @@ import ReviewContextProvider from "./context/reviewCountStarContext";
 import UserSpots from "./components/UserSpots.js/UserSpots";
 import UserBookings from "./components/UserBookings/UserBookings";
 import Profile from "./components/Profile/Profile";
+import SearchPage from "./components/SearchPage/SearchPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -49,6 +50,9 @@ function App() {
               </Route>
               <Route exact path="/reviews/current">
                 <UserReviewWrapper />
+              </Route>
+              <Route path="/search/:searchParams">
+                <SearchPage />
               </Route>
             </Switch>
           </ReviewContextProvider>
