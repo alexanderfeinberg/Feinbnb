@@ -24,6 +24,8 @@ const Bookings = ({ bookings }) => {
         }
         newBookings[booking.id] = booking;
       }
+    } else {
+      setPreviewBookings({ ...bookings });
     }
   }, [bookings]);
 

@@ -27,12 +27,13 @@ const Profile = ({ user }) => {
       await dispatch(getUserSpotsThunk(user));
       await dispatch(loadBookingsByIdThunk(user.id));
       await dispatch(getUserReviewsThunk(user.id));
+      setIsLoaded(true);
     })();
   }, []);
 
   useEffect(() => {
     console.log("PROFILE USE EFFECT ", listings, bookings, reviews);
-    if (listings && bookings && reviews) setIsLoaded(true);
+    // if (listings && bookings && reviews)
   }, [listings, bookings, reviews]);
 
   if (!isLoaded) return null;
