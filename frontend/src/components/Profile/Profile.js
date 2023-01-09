@@ -1,13 +1,13 @@
-import Bookings from "../Bookings/Bookings";
-import Listings from "../Listings/Listings";
-import ProfileCard from "../ProfileCard/ProfileCard";
-import UserReviews from "../Reviews/UserReviews";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useContext } from "react";
 import { getUserSpotsThunk } from "../../store/spots/spotThunks";
 import { getUserReviewsThunk } from "../../store/reviews/reviewThunk";
 import { loadBookingsByIdThunk } from "../../store/bookings/bookingThunk";
 import { MenuContext } from "../../context/MenuModal";
+import Bookings from "../Booking/Booking";
+import Listings from "../Listings/Listings";
+import ProfileCard from "../ProfileCard/ProfileCard";
+import UserReviews from "../Reviews/UserReviews";
 
 import "./Profile.css";
 
